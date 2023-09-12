@@ -1,6 +1,4 @@
 # Dermatoloska-ordinacija
-Dermatology Clinic
-
 This software solution is designed to streamline and enhance the operations of dermatology clinic. It includes both a desktop application for clinic staff and a mobile application for patients.
 
 
