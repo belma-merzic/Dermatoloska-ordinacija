@@ -1,0 +1,17 @@
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Services.deps.json
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Services.runtimeconfig.json
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Services.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Services.pdb
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\bin\Release\net6.0\DermatoloskaOrdinacija.Model.pdb
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.csproj.AssemblyReference.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.AssemblyInfoInputs.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.AssemblyInfo.cs
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.csproj.CoreCompileInputs.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.csproj.CopyComplete
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\refint\DermatoloskaOrdinacija.Services.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.pdb
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\DermatoloskaOrdinacija.Services.genruntimeconfig.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Services\obj\Release\net6.0\ref\DermatoloskaOrdinacija.Services.dll

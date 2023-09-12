@@ -1,0 +1,12 @@
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Release\net6.0\DermatoloskaOrdinacija.Model.deps.json
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Release\net6.0\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Release\net6.0\DermatoloskaOrdinacija.Model.pdb
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.csproj.AssemblyReference.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.AssemblyInfoInputs.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.AssemblyInfo.cs
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.csproj.CoreCompileInputs.cache
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\refint\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\DermatoloskaOrdinacija.Model.pdb
+C:\Users\merzi\OneDrive\Desktop\RS2\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Release\net6.0\ref\DermatoloskaOrdinacija.Model.dll

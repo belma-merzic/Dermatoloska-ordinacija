@@ -1,0 +1,75 @@
+version: '3'
+services:
+  rabbitMQ:
+   image: rabbitmq:3-management
+   container_name: 'rabbitmq_container'
+   environment:
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+   ports:
+    - 8050:15672
+    - 5672:5672
+   expose:
+    - 5672
+   networks: 
+    - dermatoloskanet2022
+
+  dermatoloska-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=QWElkj132!
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+      - 1433
+    networks:
+      - dermatoloskanet2022
+
+  dermatoloska-api:
+    restart: unless-stopped
+    build:
+      context: .
+    environment:
+      - ConnectionStrings:DefaultConnection=Server=dermatoloska-sql,1433;Database=_200019;User=sa;Password=QWElkj132!;ConnectRetryCount=0;TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitMQ
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_VIRTUALHOST=/
+    ports:
+      - 5192:5192
+    networks:
+      - dermatoloskanet2022
+    links:
+      - dermatoloska-sql
+    depends_on:
+      - dermatoloska-sql
+      - rabbitMQ
+
+
+  dodatni_api:
+    restart: unless-stopped
+    build:
+      context: ../DermOrdDodatni
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RABBITMQ_HOST=rabbitMQ
+      - RABBITMQ_USERNAME=guest
+      - RABBITMQ_PASSWORD=guest
+      - RABBITMQ_VIRTUALHOST=/
+    ports:
+      - 7005:7005
+    networks:
+      - dermatoloskanet2022
+    depends_on:
+      - rabbitMQ
+      
+    
+    
+  
+networks:
+  dermatoloskanet2022:
+    driver: bridge
