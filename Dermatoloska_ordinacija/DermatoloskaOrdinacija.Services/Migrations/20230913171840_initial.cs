@@ -8,11 +8,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DermatoloskaOrdinacija.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class inital : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "RecommendResult",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProizvodId = table.Column<int>(type: "int", nullable: true),
+                    PrviProizvodId = table.Column<int>(type: "int", nullable: true),
+                    DrugiProizvodId = table.Column<int>(type: "int", nullable: true),
+                    TreciProizvodId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Recommen__3214EC0798938C1E", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Spol",
                 columns: table => new
@@ -370,27 +386,27 @@ namespace DermatoloskaOrdinacija.Services.Migrations
             migrationBuilder.InsertData(
                 table: "Narudzba",
                 columns: new[] { "NarudzbaID", "BrojNarudzbe", "Datum", "Iznos", "KorisnikID", "Status" },
-                values: new object[] { 1, "#1", new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9188), 90.0, 2, "Pending" });
+                values: new object[] { 1, "#1", new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3968), 90.0, 2, "Pending" });
 
             migrationBuilder.InsertData(
                 table: "Novost",
                 columns: new[] { "NovostID", "DatumObjave", "KorisnikID", "Naslov", "Sadrzaj" },
-                values: new object[] { 1, new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9154), 1, "Test naslov", "Test sadrzaj" });
+                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3891), 1, "Test naslov", "Test sadrzaj" });
 
             migrationBuilder.InsertData(
                 table: "OmiljeniProizvodi",
                 columns: new[] { "OmiljeniProizvodID", "DatumDodavanja", "KorisnikID", "ProizvodID" },
-                values: new object[] { 1, new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9171), 2, 1 });
+                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3930), 2, 1 });
 
             migrationBuilder.InsertData(
                 table: "Recenzija",
                 columns: new[] { "RecenzijaID", "Datum", "KorisnikID", "ProizvodID", "Sadrzaj" },
-                values: new object[] { 1, new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9070), 2, 1, "Test recenzija" });
+                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3640), 2, 1, "Test recenzija" });
 
             migrationBuilder.InsertData(
                 table: "Termin",
                 columns: new[] { "TerminID", "Datum", "KorisnikID_doktor", "KorisnikID_pacijent" },
-                values: new object[] { 1, new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9135), 1, 2 });
+                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3850), 1, 2 });
 
             migrationBuilder.InsertData(
                 table: "ZdravstveniKarton",
@@ -511,6 +527,9 @@ namespace DermatoloskaOrdinacija.Services.Migrations
 
             migrationBuilder.DropTable(
                 name: "Recenzija");
+
+            migrationBuilder.DropTable(
+                name: "RecommendResult");
 
             migrationBuilder.DropTable(
                 name: "StavkaNarudzbe");

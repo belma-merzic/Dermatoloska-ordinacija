@@ -34,13 +34,13 @@ namespace DermatoloskaOrdinacija.Controllers
             return await (_service as IProizvodiService).AllowedActions(id);
         }
 
-        [HttpGet("{id}/Recommend")]
+       /* [HttpGet("{id}/Recommend")]
 
         public List<Model.Proizvod> Recommend(int id)
         {
             var result = (_service as IProizvodiService).Recommend(id);
 
             return result;
-        }
+        }*/
     }
 }

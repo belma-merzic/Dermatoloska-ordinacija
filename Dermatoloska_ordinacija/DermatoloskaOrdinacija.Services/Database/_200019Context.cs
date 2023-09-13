@@ -29,6 +29,8 @@ public partial class _200019Context : DbContext
 
     public virtual DbSet<Recenzija> Recenzijas { get; set; }
 
+    public virtual DbSet<RecommendResult> RecommendResults { get; set; }
+
     public virtual DbSet<Spol> Spols { get; set; }
 
     public virtual DbSet<StavkaNarudzbe> StavkaNarudzbes { get; set; }
@@ -44,13 +46,11 @@ public partial class _200019Context : DbContext
     public virtual DbSet<ZdravstveniKarton> ZdravstveniKartons { get; set; }
 
     /*
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-R8CFAE7;Database=_200019;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server= DESKTOP-R8CFAE7;Database=_200019;Trusted_Connection=True;TrustServerCertificate=True");
 
     */
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Dojam>(entity =>
@@ -207,6 +207,13 @@ public partial class _200019Context : DbContext
             entity.HasOne(d => d.Proizvod).WithMany(p => p.Recenzijas)
                 .HasForeignKey(d => d.ProizvodId)
                 .HasConstraintName("FK__Recenzija__Proiz__619B8048");
+        });
+
+        modelBuilder.Entity<RecommendResult>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Recommen__3214EC0798938C1E");
+
+            entity.ToTable("RecommendResult");
         });
 
         modelBuilder.Entity<Spol>(entity =>

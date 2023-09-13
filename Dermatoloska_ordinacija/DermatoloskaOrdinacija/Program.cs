@@ -32,6 +32,7 @@ builder.Services.AddTransient<IOmiljeniProizvodiService, OmiljeniProizvodiServic
 builder.Services.AddTransient<IRecenzijaService, RecenzijaService>();
 builder.Services.AddTransient<ITransakcijaService, TransakcijaService>();
 
+builder.Services.AddTransient<IRecommendResultService, RecommendResultService>();
 
 
 builder.Services.AddTransient<BaseState>(); 
@@ -107,11 +108,14 @@ using (var scope = app.Services.CreateScope())
     var dataContext = scope.ServiceProvider.GetRequiredService<_200019Context>();
     dataContext.Database.Migrate();
 
-    /*if (!dataContext.Database.CanConnect())
+    var recommendResutService = scope.ServiceProvider.GetRequiredService<IRecommendResultService>();
+    try
     {
-        dataContext.Database.Migrate();
-
-    }*/
+        await recommendResutService.TrainProductsModel();
+    }
+    catch (Exception e)
+    {
+    }
 }
 
 

@@ -34,3 +34,15 @@ C:\Users\merzi\OneDrive\Desktop\SEMINARSKI\Dermatoloska_ordinacija\DermatoloskaO
 C:\Users\merzi\OneDrive\Desktop\SEMINARSKI\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\refint\DermatoloskaOrdinacija.Model.dll
 C:\Users\merzi\OneDrive\Desktop\SEMINARSKI\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.pdb
 C:\Users\merzi\OneDrive\Desktop\SEMINARSKI\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\ref\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Debug\net6.0\DermatoloskaOrdinacija.Model.deps.json
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Debug\net6.0\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\bin\Debug\net6.0\DermatoloskaOrdinacija.Model.pdb
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.csproj.AssemblyReference.cache
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.AssemblyInfoInputs.cache
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.AssemblyInfo.cs
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.csproj.CoreCompileInputs.cache
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\refint\DermatoloskaOrdinacija.Model.dll
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\DermatoloskaOrdinacija.Model.pdb
+C:\Users\merzi\OneDrive\Desktop\Dermatoloska-ordinacija\Dermatoloska_ordinacija\DermatoloskaOrdinacija.Model\obj\Debug\net6.0\ref\DermatoloskaOrdinacija.Model.dll

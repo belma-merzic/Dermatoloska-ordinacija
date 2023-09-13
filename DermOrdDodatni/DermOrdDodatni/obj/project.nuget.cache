@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I8/1K8S5LgahzGhSA6HQOcnKnlSfcrz981mbt5k/fxGxLsyY+yYx/f5ytQzz0c8iTbOZUh+hNSpGrSwnDZB5lQ==",
+  "dgSpecHash": "AS6ZZGJ//esUyGg6kSEL/fWMA/q5vUzfrXvBIxTfjy3E0r7MxMiHOBtIdUoUWT1+Vzcob6/nFaSIQ0jWFxXveg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\SEMINARSKI\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
+  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merzi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\merzi\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

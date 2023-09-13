@@ -12,6 +12,8 @@ import '../providers/cart_provider.dart';
 import '../providers/favorites_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/recommend_result_provider.dart';
+
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({Key? key}) : super(key: key);
 
@@ -25,12 +27,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
   late FavoritesProvider _favoritesProvider;
   late KorisniciProvider _korisniciProvider;
   SearchResult<Product>? result;
-   SearchResult<Product>? resultRecomm;
+  SearchResult<Product>? resultRecomm;
   bool isLoading = true;
   TextEditingController _ftsController = new TextEditingController();
   TextEditingController _sifraController = new TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
   List<Product> dataRecomm = [];
+
+  late RecommendResultProvider _recommendResultProvider = RecommendResultProvider();
 
   String _selectedSortDirection = 'ascending';
 
@@ -40,6 +44,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
     _fetchProducts();
       _favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
       _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
+      _recommendResultProvider = context.read<RecommendResultProvider>();
+
+      _recommendResultProvider.trainData();
   }
 
   Future<void> _fetchProducts() async {
@@ -61,7 +68,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
         isLoading = false;
       });
     } catch (e) {
-      // Handle error
       print(e);
       setState(() {
         isLoading = false;
@@ -95,12 +101,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 height: 15,
               ),
               Text(
-                "Recommended articles:",
-                style: TextStyle(
-                    color: Colors.blueGrey,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600),
-              ),
+                "Recommended products:",  style: TextStyle(color: Colors.blueGrey,fontSize: 25,fontWeight: FontWeight.w600),),
               SizedBox(height: 15),
 
               Container(
@@ -205,15 +206,36 @@ List<Widget> list = (dataX?.result ?? [])
                             content: Text("Successful added to cart."),
                           ));
                           Product _x = x;
-                          var id = _x.proizvodID;
-                          var tempDataRecom =
-                              await _productProvider.recom(id!);
-                          setState(() {
-                            dataRecomm = tempDataRecom as List<Product>;
-                            resultRecomm = SearchResult<Product>()
-                            ..result = dataRecomm
-                            ..count = dataRecomm.length;
-                          });
+                          int id = _x.proizvodID!;
+                          try{
+                          var recommendResult = await _recommendResultProvider.get();
+                          var filteredRecommendation = recommendResult.result.where((x) => x.proizvodId == id).toList();
+                          if (filteredRecommendation.isNotEmpty) {
+                            var matchingRecommendation = filteredRecommendation.first;
+                           
+                            print(recommendResult);
+
+                            int prviProizvodID = matchingRecommendation.prviProizvodId!;
+                            int drugiProizvodID = matchingRecommendation.drugiProizvodId!;
+                            int treciProizvodID = matchingRecommendation.treciProizvodId!;
+                           
+                          var prviRecommendedProduct = await _productProvider.getById(prviProizvodID);
+                          var drugiRecommendedProduct = await _productProvider.getById(drugiProizvodID);
+                          var treciRecommendedProduct = await _productProvider.getById(treciProizvodID);
+                           
+                            setState(() {
+                               resultRecomm = SearchResult<Product>()
+                              ..result = [prviRecommendedProduct, drugiRecommendedProduct, treciRecommendedProduct]
+                              ..count = 3; 
+                            });
+                          } /*else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("No matching recommendations found"),
+                            ));*/
+                          } on Exception catch (e){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Try deleting recommendation first by clicking on button ->DELETE RECOM<-"),));
+                          }
+                          //}
                         },
                       ),
                       IconButton(
@@ -222,22 +244,6 @@ List<Widget> list = (dataX?.result ?? [])
                 final isProductFavorite =
                   await _favoritesProvider.exists(x.proizvodID!);
 
-                /*if (!isProductFavorite) {
-                  await _favoritesProvider.insert({
-                    "datumDodavanja":
-                      DateTime.now().toUtc().toIso8601String(),
-                    "ProizvodId": x.proizvodID,
-                    "KorisnikId": await getPatientId(),
-                  });*/
-                  /*ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Colors.green,
-                      duration: Duration(milliseconds: 1000),
-                      content:
-                        Text("Item ${x.naziv} successfully added to favorites."),
-                    ),
-                  );*/
-                  /////////////////////////////
                 if (!isProductFavorite) {
                   _favoritesProvider.sendRabbit({
                      "datumDodavanja": DateTime.now().toUtc().toIso8601String(),
@@ -253,7 +259,6 @@ List<Widget> list = (dataX?.result ?? [])
                         Text("Item ${x.naziv} successfully added to favorites."),
                     ),
                   );
-                  /////////////////////////////
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

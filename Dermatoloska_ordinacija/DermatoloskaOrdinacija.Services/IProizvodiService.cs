@@ -14,6 +14,6 @@ namespace DermatoloskaOrdinacija.Services
         Task<Proizvod> Activate(int id);
         Task<Proizvod> Hide(int id);
         Task<List<string>> AllowedActions(int id);
-        List<Model.Proizvod> Recommend(int id);
+        //List<Model.Proizvod> Recommend(int id);
     }
 }

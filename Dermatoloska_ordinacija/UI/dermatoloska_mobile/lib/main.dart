@@ -1,3 +1,4 @@
+import 'package:dermatoloska_mobile/models/recommendResult.dart';
 import 'package:dermatoloska_mobile/providers/cart_provider.dart';
 import 'package:dermatoloska_mobile/providers/dojam_provider.dart';
 import 'package:dermatoloska_mobile/providers/favorites_provider.dart';
@@ -6,6 +7,7 @@ import 'package:dermatoloska_mobile/providers/novosti_provider.dart';
 import 'package:dermatoloska_mobile/providers/order_provider.dart';
 import 'package:dermatoloska_mobile/providers/product_provider.dart';
 import 'package:dermatoloska_mobile/providers/recenzija_provider.dart';
+import 'package:dermatoloska_mobile/providers/recommend_result_provider.dart';
 import 'package:dermatoloska_mobile/providers/termini_provider.dart';
 import 'package:dermatoloska_mobile/providers/transakcija_provider.dart';
 import 'package:dermatoloska_mobile/providers/vrste_proizvoda_provider.dart';
@@ -52,6 +54,7 @@ class MyMaterialApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RecenzijaProvider()),
         ChangeNotifierProvider(create: (_) => ZdravstveniKartonProvider()),
         ChangeNotifierProvider(create: (_) => TransakcijaProvider()),
+        ChangeNotifierProvider(create: (_) => RecommendResultProvider()),
       ],
       child: MaterialApp(
         title: 'RS II Material app',

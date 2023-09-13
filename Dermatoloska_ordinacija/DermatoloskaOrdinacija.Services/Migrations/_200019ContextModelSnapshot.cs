@@ -187,7 +187,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         {
                             NarudzbaId = 1,
                             BrojNarudzbe = "#1",
-                            Datum = new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9188),
+                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3968),
                             Iznos = 90.0,
                             KorisnikId = 2,
                             Status = "Pending"
@@ -228,7 +228,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             NovostId = 1,
-                            DatumObjave = new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9154),
+                            DatumObjave = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3891),
                             KorisnikId = 1,
                             Naslov = "Test naslov",
                             Sadrzaj = "Test sadrzaj"
@@ -268,7 +268,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             OmiljeniProizvodId = 1,
-                            DatumDodavanja = new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9171),
+                            DatumDodavanja = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3930),
                             KorisnikId = 2,
                             ProizvodId = 1
                         });
@@ -377,11 +377,37 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             RecenzijaId = 1,
-                            Datum = new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9070),
+                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3640),
                             KorisnikId = 2,
                             ProizvodId = 1,
                             Sadrzaj = "Test recenzija"
                         });
+                });
+
+            modelBuilder.Entity("DermatoloskaOrdinacija.Services.Database.RecommendResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("DrugiProizvodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProizvodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrviProizvodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TreciProizvodId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Recommen__3214EC0798938C1E");
+
+                    b.ToTable("RecommendResult", (string)null);
                 });
 
             modelBuilder.Entity("DermatoloskaOrdinacija.Services.Database.Spol", b =>
@@ -494,7 +520,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             TerminId = 1,
-                            Datum = new DateTime(2023, 9, 10, 14, 28, 51, 563, DateTimeKind.Local).AddTicks(9135),
+                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3850),
                             KorisnikIdDoktor = 1,
                             KorisnikIdPacijent = 2
                         });

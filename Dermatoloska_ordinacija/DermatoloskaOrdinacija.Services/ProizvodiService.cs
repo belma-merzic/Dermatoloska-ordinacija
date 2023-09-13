@@ -102,128 +102,129 @@ namespace DermatoloskaOrdinacija.Services
             return await state.AllowedActions();
         }
 
-        
-        static object isLocked = new object();
-        static MLContext mlContext = null;
-        static ITransformer modeltr = null;
-        public List<Model.Proizvod> Recommend(int id)
-        {
 
-            mlContext = new MLContext();
+        /*  static object isLocked = new object();
+          static MLContext mlContext = null;
+          static ITransformer modeltr = null;
+          public List<Model.Proizvod> Recommend(int id)
+          {
 
-            var tmpData = _context.Narudzbas.Include("StavkaNarudzbes").ToList();
+              mlContext = new MLContext();
 
-            var data = new List<RatingEntry>();
+              var tmpData = _context.Narudzbas.Include("StavkaNarudzbes").ToList();
 
-            foreach (var x in tmpData)
-            {
-                if (x.StavkaNarudzbes.Count > 1)
-                {
-                    var distinctItemId = x.StavkaNarudzbes.Select(y => y.ProizvodId).ToList();
+              var data = new List<RatingEntry>();
 
-                    distinctItemId.ForEach(y =>
-                    {
-                        var relatedItems = x.StavkaNarudzbes.Where(z => z.ProizvodId != y).ToList();
+              foreach (var x in tmpData)
+              {
+                  if (x.StavkaNarudzbes.Count > 1)
+                  {
+                      var distinctItemId = x.StavkaNarudzbes.Select(y => y.ProizvodId).ToList();
 
-                        foreach (var z in relatedItems)
-                        {
-                            data.Add(new RatingEntry()
-                            {
-                                RatingId = (uint)y,
-                                CoRatingId = (uint)z.ProizvodId,
-                            });
-                        }
-                    });
-                }
-            };
+                      distinctItemId.ForEach(y =>
+                      {
+                          var relatedItems = x.StavkaNarudzbes.Where(z => z.ProizvodId != y).ToList();
 
-            //////////////////////////////////////////////////////////////////////////////////////////
-            DataTable dataTable = new DataTable(typeof(RatingEntry).Name);
+                          foreach (var z in relatedItems)
+                          {
+                              data.Add(new RatingEntry()
+                              {
+                                  RatingId = (uint)y,
+                                  CoRatingId = (uint)z.ProizvodId,
+                              });
+                          }
+                      });
+                  }
+              };
 
-            PropertyInfo[] Props = typeof(RatingEntry).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo prop in Props)
-            {
-                dataTable.Columns.Add(prop.Name);
-            }
-            foreach (var item in data)
-            {
-                var values = new object[Props.Length];
-                for (int i = 0; i < Props.Length; i++)
-                {
-                    values[i] = Props[i].GetValue(item, null);
-                }
-                dataTable.Rows.Add(values);
-            }
+              //////////////////////////////////////////////////////////////////////////////////////////
+              DataTable dataTable = new DataTable(typeof(RatingEntry).Name);
 
-            if (dataTable.Rows.Count == 0)
-                return null;
-            string myTableAsString =
-            String.Join(Environment.NewLine, dataTable.Rows.Cast<DataRow>().
-                Select(r => r.ItemArray).ToArray().
-                Select(x => String.Join("\t", x.Cast<string>())));
+              PropertyInfo[] Props = typeof(RatingEntry).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+              foreach (PropertyInfo prop in Props)
+              {
+                  dataTable.Columns.Add(prop.Name);
+              }
+              foreach (var item in data)
+              {
+                  var values = new object[Props.Length];
+                  for (int i = 0; i < Props.Length; i++)
+                  {
+                      values[i] = Props[i].GetValue(item, null);
+                  }
+                  dataTable.Rows.Add(values);
+              }
 
-            File.WriteAllTextAsync("img/WriteText.txt", myTableAsString);
+              if (dataTable.Rows.Count == 0)
+                  return null;
+              string myTableAsString =
+              String.Join(Environment.NewLine, dataTable.Rows.Cast<DataRow>().
+                  Select(r => r.ItemArray).ToArray().
+                  Select(x => String.Join("\t", x.Cast<string>())));
 
-
-            var putanja1 = System.Environment.CurrentDirectory + @"\img\" + "WriteText.txt";
-            if (putanja1 == null)
-                throw new Exception("Nema putanje");
-        //////////////////////////////////////////////////////////////////////////////////////////
+              File.WriteAllTextAsync("img/WriteText.txt", myTableAsString);
 
 
-               var traindata = mlContext.Data.LoadFromEnumerable(data);
-               MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
-               options.MatrixColumnIndexColumnName = nameof(RatingEntry.RatingId);
-               options.MatrixRowIndexColumnName = nameof(RatingEntry.CoRatingId);
-               options.LabelColumnName = "Label";
-               options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
-               options.Alpha = 0.01;
-               options.Lambda = 0.025;
-               var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
-
-               modeltr = est.Fit(traindata);
+              var putanja1 = System.Environment.CurrentDirectory + @"\img\" + "WriteText.txt";
+              if (putanja1 == null)
+                  throw new Exception("Nema putanje");
+          //////////////////////////////////////////////////////////////////////////////////////////
 
 
-               var allItems = _context.Proizvods.Where(x => x.ProizvodId != id);
-               var predictionResult = new List<Tuple<Database.Proizvod, float>>();
+                 var traindata = mlContext.Data.LoadFromEnumerable(data);
+                 MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
+                 options.MatrixColumnIndexColumnName = nameof(RatingEntry.RatingId);
+                 options.MatrixRowIndexColumnName = nameof(RatingEntry.CoRatingId);
+                 options.LabelColumnName = "Label";
+                 options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
+                 options.Alpha = 0.01;
+                 options.Lambda = 0.025;
+                 var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
 
-               foreach (var item in allItems)
-               {
-                   var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingEntry, Copurchase_prediction>(modeltr);
-                   var prediction = predictionEngine.Predict(new RatingEntry()
-                   {
-                       RatingId = (uint)id,
-                       CoRatingId = (uint)item.ProizvodId
-                   });
-
-                   predictionResult.Add(new Tuple<Database.Proizvod, float>(item, prediction.Score));
-               }
-               var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(3).ToList();
-
-               if (finalResult != null)
-                   return _mapper.Map<List<Model.Proizvod>>(finalResult);
-               return null;
-           }
+                 modeltr = est.Fit(traindata);
 
 
+                 var allItems = _context.Proizvods.Where(x => x.ProizvodId != id);
+                 var predictionResult = new List<Tuple<Database.Proizvod, float>>();
 
-       }
-       public class CoRating_prediction
-       {
-           public float Score { get; set; }
-       }
-       public class RatingEntry
-       {
-           [KeyType(count: 262111)]
-           public uint RatingId { get; set; }
-           [KeyType(count: 262111)]
-           public uint CoRatingId { get; set; }
-           public float Label { get; set; }
+                 foreach (var item in allItems)
+                 {
+                     var predictionEngine = mlContext.Model.CreatePredictionEngine<RatingEntry, Copurchase_prediction>(modeltr);
+                     var prediction = predictionEngine.Predict(new RatingEntry()
+                     {
+                         RatingId = (uint)id,
+                         CoRatingId = (uint)item.ProizvodId
+                     });
 
-       }
-       public class Copurchase_prediction
-       {
-           public float Score { get; set; }
-       }
+                     predictionResult.Add(new Tuple<Database.Proizvod, float>(item, prediction.Score));
+                 }
+                 var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(3).ToList();
+
+                 if (finalResult != null)
+                     return _mapper.Map<List<Model.Proizvod>>(finalResult);
+                 return null;
+             }
+
+
+
+         }
+         public class CoRating_prediction
+         {
+             public float Score { get; set; }
+         }
+         public class RatingEntry
+         {
+             [KeyType(count: 262111)]
+             public uint RatingId { get; set; }
+             [KeyType(count: 262111)]
+             public uint CoRatingId { get; set; }
+             public float Label { get; set; }
+
+         }
+         public class Copurchase_prediction
+         {
+             public float Score { get; set; }
+         }*/
     }
+}
 

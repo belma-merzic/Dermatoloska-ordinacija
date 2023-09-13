@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vQqNHIft8jU7fZ71YMbcM3YjPKjrNpnePzplbHBbZeq+fiFO0sbE8olBzpJEhebzpsD+Etsz227lutnRhW9gog==",
+  "dgSpecHash": "mLJ4pyuzoqV6kZdN1Tlb00kM5baSM/cI2UNIp8ijO6kpD4iDwr3Dz40NZj3+w6ZQBE2s0JhMSWIq24LtmDJGkw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\SEMINARSKI\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
+  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merzi\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\merzi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

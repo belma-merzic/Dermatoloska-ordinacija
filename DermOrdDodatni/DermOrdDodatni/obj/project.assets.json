@@ -686,11 +686,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\SEMINARSKI\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
+      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
       "projectName": "DermOrdDodatni",
-      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\SEMINARSKI\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
+      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\DermOrdDodatni\\DermOrdDodatni\\DermOrdDodatni.csproj",
       "packagesPath": "C:\\Users\\merzi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\SEMINARSKI\\DermOrdDodatni\\DermOrdDodatni\\obj\\",
+      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\DermOrdDodatni\\DermOrdDodatni\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\merzi\\AppData\\Roaming\\NuGet\\NuGet.Config",
