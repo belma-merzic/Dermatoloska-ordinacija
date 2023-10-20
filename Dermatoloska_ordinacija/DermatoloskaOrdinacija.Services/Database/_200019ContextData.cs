@@ -104,8 +104,17 @@ namespace DermatoloskaOrdinacija.Services.Database
                 {
                     ProizvodId = 3,
                     Naziv = "Krema za lice",
-                    Sifra = "555B",
+                    Sifra = "555C",
                     Cijena = 40,
+                    VrstaId = 1,
+                    StateMachine = "draft"
+                },
+                new Proizvod()
+                {
+                    ProizvodId = 4,
+                    Naziv = "Krema za rozaceu",
+                    Sifra = "555D",
+                    Cijena = 20,
                     VrstaId = 1,
                     StateMachine = "draft"
                 }
@@ -181,7 +190,16 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Status = "Pending",
                     KorisnikId = 2,
                     Iznos = 90
-                }
+                },
+                 new Narudzba()
+                 {
+                     NarudzbaId = 2,
+                     BrojNarudzbe = "#2",
+                     Datum = DateTime.Now,
+                     Status = "Pending",
+                     KorisnikId = 2,
+                     Iznos = 60
+                 }
             );
 
             modelBuilder.Entity<StavkaNarudzbe>().HasData(
@@ -198,7 +216,21 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Kolicina = 1,
                     NarudzbaId = 1,
                     ProizvodId = 2
-                }
+                },
+                 new StavkaNarudzbe()
+                 {
+                     StavkaNarudzbeId = 3,
+                     Kolicina = 1,
+                     NarudzbaId = 2,
+                     ProizvodId = 3
+                 },
+                  new StavkaNarudzbe()
+                  {
+                      StavkaNarudzbeId = 4,
+                      Kolicina = 1,
+                      NarudzbaId = 2,
+                      ProizvodId = 4
+                  }
             );
 
             modelBuilder.Entity<Transakcija>().HasData(

@@ -1206,11 +1206,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
+      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
       "projectName": "DermatoloskaOrdinacija.Model",
-      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
+      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
       "packagesPath": "C:\\Users\\merzi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\obj\\",
+      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\merzi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1221,7 +1221,8 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/Fished/Fished/_packaging/Fished/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {

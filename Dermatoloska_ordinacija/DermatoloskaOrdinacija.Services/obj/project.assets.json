@@ -4249,11 +4249,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
+      "projectUniqueName": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
       "projectName": "DermatoloskaOrdinacija.Services",
-      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
+      "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\DermatoloskaOrdinacija.Services.csproj",
       "packagesPath": "C:\\Users\\merzi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\obj\\",
+      "outputPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\merzi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4264,14 +4264,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://pkgs.dev.azure.com/Fished/Fished/_packaging/Fished/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj": {
-              "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj"
+            "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj": {
+              "projectPath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj"
             }
           }
         }

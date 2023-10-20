@@ -1,3 +1,8 @@
+using DermOrdDodatni;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

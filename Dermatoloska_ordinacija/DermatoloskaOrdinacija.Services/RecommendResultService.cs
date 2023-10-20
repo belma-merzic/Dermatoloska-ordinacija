@@ -117,30 +117,22 @@ namespace DermatoloskaOrdinacija.Services
 
         public async Task<List<Model.RecommendResult>> TrainProductsModel()
         {
-            /*if (_context.RecommendResults.Count() != 0)
-            {
-                DeleteAllRecommendation();
-            }*/
-
             var stavkeNarudzbe = _context.StavkaNarudzbes.ToList();
+            var proizvodi = _context.Proizvods.ToList();
 
             if (stavkeNarudzbe.Count() > 0)
             {
                 List<Database.RecommendResult> recommendList = new List<Database.RecommendResult>();
 
-                foreach (var stavka in stavkeNarudzbe)
+                foreach (var proizvod in proizvodi)
                 {
                     
-                    var recommendedProducts = Recommend(stavka.ProizvodId);
+                    var recommendedProducts = Recommend(proizvod.ProizvodId);
 
-                    /*if (_context.RecommendResults.Count() != 0)
-                    {
-                        DeleteAllRecommendation();
-                    }*/
-
+             
                     var resultRecommend = new Database.RecommendResult()
                     {
-                        ProizvodId = stavka.ProizvodId,
+                        ProizvodId = proizvod.ProizvodId,
                         PrviProizvodId = recommendedProducts[0].ProizvodID,
                         DrugiProizvodId = recommendedProducts[1].ProizvodID,
                         TreciProizvodId = recommendedProducts[2].ProizvodID,
@@ -149,13 +141,13 @@ namespace DermatoloskaOrdinacija.Services
                 }
 
                 var list = _context.RecommendResults.ToList();
-                var recordCount = list.Count();
-                var stavkaCount = _context.StavkaNarudzbes.Count();
+                var recordCount = list.Count(); 
+                var proizvodiCount = _context.Proizvods.Count();
                 if (recordCount != 0)
                 {
-                    if(recordCount > stavkaCount)
+                    if(recordCount > proizvodiCount) 
                     {
-                        for (int i = 0; i < stavkaCount; i++)
+                        for (int i = 0; i < proizvodiCount; i++) 
                         {
                             list[i].ProizvodId = recommendList[i].ProizvodId;
                             list[i].PrviProizvodId = recommendList[i].PrviProizvodId;
@@ -163,14 +155,14 @@ namespace DermatoloskaOrdinacija.Services
                             list[i].TreciProizvodId = recommendList[i].TreciProizvodId;
                         }
 
-                        for (int i = stavkaCount; i < recordCount; i++)
+                        for (int i = proizvodiCount; i < recordCount; i++) 
                         {
                             _context.RecommendResults.Remove(list[i]);
                         }
                     }
-                    else
+                    else 
                     {
-                        for (int i = 0; i < recordCount; i++)
+                        for (int i = 0; i < recordCount; i++) 
                         {
                             list[i].ProizvodId = recommendList[i].ProizvodId;
                             list[i].PrviProizvodId = recommendList[i].PrviProizvodId;
@@ -179,7 +171,7 @@ namespace DermatoloskaOrdinacija.Services
                         }
                         var num = recommendList.Count() - recordCount;
 
-                        if (num > 0)
+                        if (num > 0) 
                         {
                             for (int i = recommendList.Count() - num; i < recommendList.Count(); i++)
                             {
@@ -190,7 +182,7 @@ namespace DermatoloskaOrdinacija.Services
                 }
                 else
                 {
-                    _context.RecommendResults.AddRange(recommendList);
+                    _context.RecommendResults.AddRange(recommendList); 
                 }
                 await _context.SaveChangesAsync();
                 return _mapper.Map<List<Model.RecommendResult>>(recommendList);
@@ -205,5 +197,7 @@ namespace DermatoloskaOrdinacija.Services
         {
            return  _context.RecommendResults.ExecuteDeleteAsync();
         }
+
+      
     }
 }

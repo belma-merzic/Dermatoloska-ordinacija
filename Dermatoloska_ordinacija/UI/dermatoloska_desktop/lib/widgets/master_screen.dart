@@ -23,6 +23,23 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
     return Scaffold(
       appBar: AppBar( 
         title: widget.title_widget ?? Text(widget.title ?? ""), 
+        actions: [
+          TextButton.icon(
+              onPressed: (() {
+                if (!ModalRoute.of(context)!.isFirst) {
+                  Navigator.pop(context,
+                      'reload2');
+                }
+              }),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              label: Text(
+                "Back",
+                style: const TextStyle(color: Colors.white),
+              )),
+        ],
       ),
       drawer: Drawer(
         child: ListView(

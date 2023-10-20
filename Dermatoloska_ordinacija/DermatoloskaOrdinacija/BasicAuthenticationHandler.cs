@@ -29,7 +29,7 @@ namespace DermatoloskaOrdinacija
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialsBytes = Convert.FromBase64String(authHeader.Parameter);
-                var credentials = Encoding.UTF8.GetString(credentialsBytes).Split(':'); 
+                var credentials = Encoding.UTF8.GetString(credentialsBytes).Split(':');
 
                 var username = credentials[0];
                 var password = credentials[1];
@@ -57,9 +57,9 @@ namespace DermatoloskaOrdinacija
                 claims.Add(new Claim(ClaimTypes.Role, korisnik.TipKorisnika.Tip));
 
 
-                var identity = new ClaimsIdentity(claims, Scheme.Name); 
+                var identity = new ClaimsIdentity(claims, Scheme.Name);
                 var principal = new ClaimsPrincipal(identity);
-                var ticket = new AuthenticationTicket(principal, Scheme.Name); 
+                var ticket = new AuthenticationTicket(principal, Scheme.Name);
                 return AuthenticateResult.Success(ticket);
             }
         }

@@ -1,4 +1,6 @@
+import 'package:dermatoloska_desktop/models/recommendResult.dart';
 import 'package:dermatoloska_desktop/providers/product_provider.dart';
+import 'package:dermatoloska_desktop/providers/recommend_result_provider.dart';
 import 'package:dermatoloska_desktop/screens/product_detail_screen.dart';
 import 'package:dermatoloska_desktop/utils/util.dart';
 import 'package:dermatoloska_desktop/widgets/master_screen.dart';
@@ -19,6 +21,7 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   late ProductProvider _productProvider;
+  late RecommendResultProvider _recommendResultProvider;
   SearchResult<Product>? result;
   bool isLoading = true;
   TextEditingController _ftsController = new TextEditingController();
@@ -31,6 +34,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   void initState() {
     super.initState();
     _productProvider = Provider.of<ProductProvider>(context, listen: false);
+    _recommendResultProvider = Provider.of<RecommendResultProvider>(context, listen: false);
     _fetchProducts();
   }
 
@@ -102,6 +106,45 @@ class _ProductListScreenState extends State<ProductListScreen> {
               }).toList(),
             ),
             SizedBox(width: 8),
+
+
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                await _recommendResultProvider.trainData();
+                } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                content: Text('Error'),
+                duration: Duration(seconds: 2),
+                ),
+               );
+              }
+              },
+              child: Text("Train Recomm"),
+            ),
+
+
+             ElevatedButton(
+              onPressed: () async {
+                try {
+                await _recommendResultProvider.deleteData();
+                } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                content: Text('Error'),
+                duration: Duration(seconds: 2),
+                ),
+               );
+              }
+              },
+              child: Text("Delete Recomm"),
+            ),
+
+
+
+
+
             ElevatedButton(
               onPressed: () async {
                 Navigator.of(context).push(
@@ -129,14 +172,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
     child: SingleChildScrollView(
       child: DataTable(
         columns: [
-          const DataColumn(
-            label: const Expanded(
-              child: const Text(
-                'ID',
-                style: const TextStyle(fontStyle: FontStyle.italic),
-              ),
-            ),
-          ),
           const DataColumn(
             label: const Expanded(
               child: const Text(
@@ -189,7 +224,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
               }
             },
             cells: [
-              DataCell(Text(e.proizvodID?.toString() ?? "")),
               DataCell(Text(e.sifra ?? "")),
               DataCell(Text(e.naziv ?? "")),
               DataCell(Text(formatNumber(e.cijena))),
@@ -250,7 +284,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       await _productProvider.delete(product.proizvodID);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Product with ID ${product.proizvodID} deleted successfully.'),
+          content: Text('Product  deleted successfully.'),
           duration: Duration(seconds: 2),
         ),
       );
@@ -258,7 +292,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to delete product with ID ${product.proizvodID}.'),
+          content: Text('Failed to delete product.'),
           duration: Duration(seconds: 2),
         ),
       );

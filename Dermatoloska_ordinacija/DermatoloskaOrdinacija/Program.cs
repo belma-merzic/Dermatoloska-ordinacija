@@ -81,6 +81,8 @@ builder.Services.AddDbContext<_200019Context>(options =>
 
 builder.Services.AddAutoMapper(typeof(IKorisniciService));
 
+
+
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
@@ -106,15 +108,18 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<_200019Context>();
-    dataContext.Database.Migrate();
+    if (!dataContext.Database.CanConnect())
+    {
+        dataContext.Database.Migrate();
 
-    var recommendResutService = scope.ServiceProvider.GetRequiredService<IRecommendResultService>();
-    try
-    {
-        await recommendResutService.TrainProductsModel();
-    }
-    catch (Exception e)
-    {
+        var recommendResutService = scope.ServiceProvider.GetRequiredService<IRecommendResultService>();
+        try
+        {
+            await recommendResutService.TrainProductsModel();
+        }
+        catch (Exception e)
+        {
+        }
     }
 }
 

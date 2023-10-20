@@ -375,7 +375,8 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                 {
                     { 1, 50m, "Krema za akne", "555A", null, "draft", 1 },
                     { 2, 40m, "Losion za lice", "555B", null, "draft", 2 },
-                    { 3, 40m, "Krema za lice", "555B", null, "draft", 1 }
+                    { 3, 40m, "Krema za lice", "555C", null, "draft", 1 },
+                    { 4, 20m, "Krema za rozaceu", "555D", null, "draft", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -386,27 +387,31 @@ namespace DermatoloskaOrdinacija.Services.Migrations
             migrationBuilder.InsertData(
                 table: "Narudzba",
                 columns: new[] { "NarudzbaID", "BrojNarudzbe", "Datum", "Iznos", "KorisnikID", "Status" },
-                values: new object[] { 1, "#1", new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3968), 90.0, 2, "Pending" });
+                values: new object[,]
+                {
+                    { 1, "#1", new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8493), 90.0, 2, "Pending" },
+                    { 2, "#2", new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8500), 60.0, 2, "Pending" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Novost",
                 columns: new[] { "NovostID", "DatumObjave", "KorisnikID", "Naslov", "Sadrzaj" },
-                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3891), 1, "Test naslov", "Test sadrzaj" });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8444), 1, "Test naslov", "Test sadrzaj" });
 
             migrationBuilder.InsertData(
                 table: "OmiljeniProizvodi",
                 columns: new[] { "OmiljeniProizvodID", "DatumDodavanja", "KorisnikID", "ProizvodID" },
-                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3930), 2, 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8469), 2, 1 });
 
             migrationBuilder.InsertData(
                 table: "Recenzija",
                 columns: new[] { "RecenzijaID", "Datum", "KorisnikID", "ProizvodID", "Sadrzaj" },
-                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3640), 2, 1, "Test recenzija" });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8335), 2, 1, "Test recenzija" });
 
             migrationBuilder.InsertData(
                 table: "Termin",
                 columns: new[] { "TerminID", "Datum", "KorisnikID_doktor", "KorisnikID_pacijent" },
-                values: new object[] { 1, new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3850), 1, 2 });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8419), 1, 2 });
 
             migrationBuilder.InsertData(
                 table: "ZdravstveniKarton",
@@ -419,7 +424,9 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1, 1 },
-                    { 2, 1, 1, 2 }
+                    { 2, 1, 1, 2 },
+                    { 3, 1, 2, 3 },
+                    { 4, 1, 2, 4 }
                 });
 
             migrationBuilder.InsertData(

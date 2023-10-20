@@ -46,7 +46,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
       _recommendResultProvider = context.read<RecommendResultProvider>();
 
-      _recommendResultProvider.trainData();
+     // _recommendResultProvider.trainData();
   }
 
   Future<void> _fetchProducts() async {
@@ -199,8 +199,7 @@ List<Widget> list = (dataX?.result ?? [])
                         icon: Icon(Icons.shopping_cart),
                         onPressed: () async {
                           _cartProvider.addToCart(x);
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             backgroundColor: Colors.green,
                             duration: Duration(milliseconds: 1000),
                             content: Text("Successful added to cart."),
@@ -228,15 +227,15 @@ List<Widget> list = (dataX?.result ?? [])
                               ..result = [prviRecommendedProduct, drugiRecommendedProduct, treciRecommendedProduct]
                               ..count = 3; 
                             });
-                          } /*else {
+                          } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text("No matching recommendations found"),
-                            ));*/
-                          } on Exception catch (e){
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Try deleting recommendation first by clicking on button ->DELETE RECOM<-"),));
+                            ));
+                          } 
+                          }on Exception catch (e){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something bad happened."),));
                           }
-                          //}
-                        },
+                          },
                       ),
                       IconButton(
               icon: Icon(Icons.favorite),

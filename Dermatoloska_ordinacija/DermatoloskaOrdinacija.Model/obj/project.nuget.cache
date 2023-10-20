@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nV3yW0HqCXUqW7I4az7ofgkqV/B5eMP5U3MqTEA/hzfNQ2Qj3fECn5s0kpM5SZlNZ99RaubWxVNLUDv6GXBJSw==",
+  "dgSpecHash": "gG/8iGpRs6s65ZguvRRyzFsQG/Jd7Tl0mY/yju0fzyuo1sHFan92xOtpTDgIilH7qkIp67apjCTYaAG7aM5iiw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
+  "projectFilePath": "C:\\Users\\merzi\\OneDrive\\Desktop\\rs\\Dermatoloska-ordinacija\\Dermatoloska_ordinacija\\DermatoloskaOrdinacija.Model\\DermatoloskaOrdinacija.Model.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\merzi\\.nuget\\packages\\microsoft.ml\\2.0.1\\microsoft.ml.2.0.1.nupkg.sha512",
     "C:\\Users\\merzi\\.nuget\\packages\\microsoft.ml.cpumath\\2.0.1\\microsoft.ml.cpumath.2.0.1.nupkg.sha512",

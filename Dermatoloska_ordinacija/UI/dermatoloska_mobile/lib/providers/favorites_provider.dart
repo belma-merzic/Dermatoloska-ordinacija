@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:dermatoloska_mobile/providers/base_provider.dart';
 import 'package:http/http.dart' as http;
 import '../models/favorites.dart';
+import 'package:dermatoloska_mobile/utils/util.dart';
+
 
 class FavoritesProvider extends BaseProvider<Favorites> { 
 
@@ -31,7 +33,7 @@ class FavoritesProvider extends BaseProvider<Favorites> {
     
     var uri = Uri.parse(url);
     var jsonRequest = jsonEncode(object);
-      var headers = {"Content-Type": "application/json"};
+    var headers = {"Content-Type": "application/json"};
 
     var response = await  http.post(uri, headers: headers, body:jsonRequest );
     

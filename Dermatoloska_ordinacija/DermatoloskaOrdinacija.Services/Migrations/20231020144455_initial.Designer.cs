@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DermatoloskaOrdinacija.Services.Migrations
 {
     [DbContext(typeof(_200019Context))]
-    [Migration("20230913171840_initial")]
+    [Migration("20231020144455_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -190,8 +190,17 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         {
                             NarudzbaId = 1,
                             BrojNarudzbe = "#1",
-                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3968),
+                            Datum = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8493),
                             Iznos = 90.0,
+                            KorisnikId = 2,
+                            Status = "Pending"
+                        },
+                        new
+                        {
+                            NarudzbaId = 2,
+                            BrojNarudzbe = "#2",
+                            Datum = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8500),
+                            Iznos = 60.0,
                             KorisnikId = 2,
                             Status = "Pending"
                         });
@@ -231,7 +240,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             NovostId = 1,
-                            DatumObjave = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3891),
+                            DatumObjave = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8444),
                             KorisnikId = 1,
                             Naslov = "Test naslov",
                             Sadrzaj = "Test sadrzaj"
@@ -271,7 +280,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             OmiljeniProizvodId = 1,
-                            DatumDodavanja = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3930),
+                            DatumDodavanja = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8469),
                             KorisnikId = 2,
                             ProizvodId = 1
                         });
@@ -338,7 +347,16 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                             ProizvodId = 3,
                             Cijena = 40m,
                             Naziv = "Krema za lice",
-                            Sifra = "555B",
+                            Sifra = "555C",
+                            StateMachine = "draft",
+                            VrstaId = 1
+                        },
+                        new
+                        {
+                            ProizvodId = 4,
+                            Cijena = 20m,
+                            Naziv = "Krema za rozaceu",
+                            Sifra = "555D",
                             StateMachine = "draft",
                             VrstaId = 1
                         });
@@ -380,7 +398,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             RecenzijaId = 1,
-                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3640),
+                            Datum = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8335),
                             KorisnikId = 2,
                             ProizvodId = 1,
                             Sadrzaj = "Test recenzija"
@@ -487,6 +505,20 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                             Kolicina = 1,
                             NarudzbaId = 1,
                             ProizvodId = 2
+                        },
+                        new
+                        {
+                            StavkaNarudzbeId = 3,
+                            Kolicina = 1,
+                            NarudzbaId = 2,
+                            ProizvodId = 3
+                        },
+                        new
+                        {
+                            StavkaNarudzbeId = 4,
+                            Kolicina = 1,
+                            NarudzbaId = 2,
+                            ProizvodId = 4
                         });
                 });
 
@@ -523,7 +555,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             TerminId = 1,
-                            Datum = new DateTime(2023, 9, 13, 19, 18, 39, 831, DateTimeKind.Local).AddTicks(3850),
+                            Datum = new DateTime(2023, 10, 20, 16, 44, 55, 557, DateTimeKind.Local).AddTicks(8419),
                             KorisnikIdDoktor = 1,
                             KorisnikIdPacijent = 2
                         });

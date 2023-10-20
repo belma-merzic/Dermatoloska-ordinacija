@@ -1,7 +1,9 @@
+import 'package:dermatoloska_desktop/models/recommendResult.dart';
 import 'package:dermatoloska_desktop/providers/korisnik_provider.dart';
 import 'package:dermatoloska_desktop/providers/novosti_provider.dart';
 import 'package:dermatoloska_desktop/providers/orders_provider.dart';
 import 'package:dermatoloska_desktop/providers/product_provider.dart';
+import 'package:dermatoloska_desktop/providers/recommend_result_provider.dart';
 import 'package:dermatoloska_desktop/providers/termini_provider.dart';
 import 'package:dermatoloska_desktop/providers/vrste_proizvoda_provider.dart';
 import 'package:dermatoloska_desktop/providers/zdravstveni_karton_provider.dart';
@@ -58,6 +60,7 @@ class MyMaterialApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TerminiProvider()),
         ChangeNotifierProvider(create: (_) => KorisniciProvider()),
         ChangeNotifierProvider(create: (_) => ZdravstveniKartonProvider()),
+        ChangeNotifierProvider(create: (_) => RecommendResultProvider()),
       ],
       child: MaterialApp(
         title: 'RS II Material app',
@@ -118,10 +121,10 @@ class LoginPage extends StatelessWidget {
                   try {
                     await _productProvider.get();
   
-                    Navigator.of(context).push( 
-                    MaterialPageRoute(builder: (context) => const ProductListScreen()
-                    ),
-                    );
+                    Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) {
+                                  return const ProductListScreen();
+                                }));
                   } on Exception catch (e) {
                     showDialog(
                           context: context, 

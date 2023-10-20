@@ -76,6 +76,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Padding(padding: EdgeInsets.all(10),
             child: ElevatedButton(onPressed: () async {
+               final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
+    if (isPriceValid == null || !isPriceValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fix the price before saving.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
               _formKey.currentState?.saveAndValidate();
 
               print(_formKey.currentState?.value);
@@ -168,9 +178,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 ),),
 Expanded(
           child: FormBuilderTextField(
-            decoration: InputDecoration(labelText: "Price"),
-            name: 'cijena',
-            ),
+  decoration: InputDecoration(labelText: "Price"),
+  name: 'cijena',
+  validator: (value) {
+    if (value!.isEmpty) {
+      return "Price is required";
+    }
+    final cijena = double.tryParse(value);
+    if (cijena == null) {
+      return "Price must be a number";
+    }
+    if (cijena < 0 || cijena > 10000) {
+      return "Price must be between 0 and 10,000";
+    }
+    return null; 
+  },
+)
+
         ),
       ],
     ),
