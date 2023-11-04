@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Connections;
+﻿using AutoMapper;
+using DermOrdDodatni.Database;
+using DermOrdDodatni.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -7,10 +9,23 @@ using System.Text;
 
 namespace DermOrdDodatni.Controllers
 {
+
     [Route("[controller]")]
     [ApiController]
     public class OmiljeniProizvodiController : ControllerBase
     {
+        _200019Context _context;
+        protected IMapper _mapper { get; set; }
+        public IKorisniciService _korisniciService { get; set; }
+
+        public OmiljeniProizvodiController(_200019Context context, IMapper mapper, IKorisniciService korisniciService)
+        {
+            _context = context;
+            _mapper = mapper;
+            _korisniciService = korisniciService;
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Send(OmiljeniProizvodiUpsertRequest favorite)
         {
@@ -18,7 +33,7 @@ namespace DermOrdDodatni.Controllers
                 return BadRequest("Can't send null object");
 
             if (favorite.KorisnikId <= 0)
-                return BadRequest("KorisnikId must be greater than 0"); 
+                return BadRequest("KorisnikId must be greater than 0");
 
             if (favorite.ProizvodId <= 0)
                 return BadRequest("ProizvodId must be greater than 0");
@@ -50,6 +65,15 @@ namespace DermOrdDodatni.Controllers
                                  body: body);
 
             return Ok(favorite);
+        }
+
+        [Authorize]
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            var user = await _korisniciService.GetKorisnik(userId);
+
+            return Ok(user);
         }
 
     }

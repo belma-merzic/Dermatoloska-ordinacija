@@ -33,6 +33,7 @@ builder.Services.AddTransient<IRecenzijaService, RecenzijaService>();
 builder.Services.AddTransient<ITransakcijaService, TransakcijaService>();
 
 builder.Services.AddTransient<IRecommendResultService, RecommendResultService>();
+builder.Services.AddTransient<IStavkaNarudzbeService, StavkaNarudzbeService>();
 
 
 builder.Services.AddTransient<BaseState>(); 
@@ -179,6 +180,7 @@ consumer.Received += async (model, ea) =>
     }
     // Console.WriteLine();
     Console.WriteLine(Environment.GetEnvironmentVariable("Some"));
+    Console.WriteLine("USAO U GLAVNI U PROGRAM CS PROSAO INSERT PROIZVODA");
 };
 channel.BasicConsume(queue: "favorites",
                      autoAck: true,

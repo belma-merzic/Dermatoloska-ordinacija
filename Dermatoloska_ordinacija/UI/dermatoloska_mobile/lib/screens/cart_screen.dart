@@ -17,11 +17,11 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
+   double total = 0;
 class _CartScreenState extends State<CartScreen> {
    late CartProvider _cartProvider;
    late OrderProvider _orderProvider;
    late KorisniciProvider _korisniciProvider;
-   double total = 0;
 
 @override
   void initState() {
@@ -35,10 +35,10 @@ class _CartScreenState extends State<CartScreen> {
     _orderProvider = context.watch<OrderProvider>();
     _korisniciProvider = context.watch<KorisniciProvider>();
 
- for (var item in _cartProvider.cart.items) {
+ /*for (var item in _cartProvider.cart.items) {
       total += double.parse(item.count.toString()) *
           double.parse(item.product.cijena.toString());
-    }
+    }*/
   }
 
 
@@ -83,14 +83,43 @@ class _CartScreenState extends State<CartScreen> {
   }
 
 
-  Widget _buildProductCard(CartItem item) {
-    return ListTile(
-      leading: imageFromBase64String(item.product.slika!),
-      title: Text(item.product.naziv ?? ""),
-      subtitle: Text(item.product.cijena.toString()),
-      trailing: Text(item.count.toString()),
-    );
-  }
+Widget _buildProductCard(CartItem item) {
+  return Row(
+    children: [
+      Container(
+        width: 100,
+        height: 100,
+        child: imageFromBase64String(item.product.slika!),
+      ),
+      SizedBox(width: 10), // Add some spacing between the image and buttons
+      Expanded(
+        child: ListTile(
+          title: Text(item.product.naziv ?? ""),
+          subtitle: Text(item.product.cijena.toString()),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min, // Make sure buttons are not stretched
+            children: [
+              IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () {
+                  _cartProvider.decreaseQuantity(item.product);
+                },
+              ),
+              Text(item.count.toString()),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  _cartProvider.addToCart(item.product);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
 
   Future<int> getPatientId() async {
       final pacijenti = await _korisniciProvider.get(filter: {
@@ -113,6 +142,7 @@ Widget _buildBuyButton() {
     onPressed: () async {
       total = 0;
       List<Map<String, dynamic>> items = [];
+
       _cartProvider.cart.items.forEach((item) {
         items.add(
           {

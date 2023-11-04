@@ -3,6 +3,7 @@ using DermatoloskaOrdinacija.Model;
 using DermatoloskaOrdinacija.Model.Requests;
 using DermatoloskaOrdinacija.Model.SearchObjects;
 using DermatoloskaOrdinacija.Services.Database;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

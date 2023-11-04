@@ -192,7 +192,7 @@ List<Widget> list = (dataX?.result ?? [])
                     ),
                   ),
                   Text(x.naziv ?? ""),
-                  Text(formatNumber(x.cijena)),
+                  Text("${formatNumber(x.cijena)} KM"),
                   Row(
                     children: [
                       IconButton(

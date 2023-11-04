@@ -59,6 +59,10 @@ namespace DermatoloskaOrdinacija.Services
             CreateMap<Database.RecommendResult, Model.RecommendResult>();
             CreateMap<Model.Requests.RecommendResultUpsertRequest, Database.RecommendResult>();
 
+            CreateMap<Database.StavkaNarudzbe, Model.StavkaNarudzbe>();
+            CreateMap<Model.Requests.StavkaNarudzbeInsertRequest, Database.StavkaNarudzbe>();
+            CreateMap<Model.Requests.StavkaNarudzbeUpdateRequest, Database.StavkaNarudzbe>();
+
         }
     }
 }

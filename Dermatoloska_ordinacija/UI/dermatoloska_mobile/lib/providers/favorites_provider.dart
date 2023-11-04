@@ -30,10 +30,13 @@ class FavoritesProvider extends BaseProvider<Favorites> {
 
     Future<dynamic> sendRabbit(dynamic object) async{
      var url = "$_mainBaseUrl$_endpoint";
+     
     
     var uri = Uri.parse(url);
     var jsonRequest = jsonEncode(object);
-    var headers = {"Content-Type": "application/json"};
+    //var headers = {"Content-Type": "application/json"};
+    var headers = createHeaders();
+
 
     var response = await  http.post(uri, headers: headers, body:jsonRequest );
     

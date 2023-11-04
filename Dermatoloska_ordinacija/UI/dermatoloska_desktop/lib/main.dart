@@ -4,6 +4,7 @@ import 'package:dermatoloska_desktop/providers/novosti_provider.dart';
 import 'package:dermatoloska_desktop/providers/orders_provider.dart';
 import 'package:dermatoloska_desktop/providers/product_provider.dart';
 import 'package:dermatoloska_desktop/providers/recommend_result_provider.dart';
+import 'package:dermatoloska_desktop/providers/stavka_narudzbe_provider.dart';
 import 'package:dermatoloska_desktop/providers/termini_provider.dart';
 import 'package:dermatoloska_desktop/providers/vrste_proizvoda_provider.dart';
 import 'package:dermatoloska_desktop/providers/zdravstveni_karton_provider.dart';
@@ -61,6 +62,7 @@ class MyMaterialApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => KorisniciProvider()),
         ChangeNotifierProvider(create: (_) => ZdravstveniKartonProvider()),
         ChangeNotifierProvider(create: (_) => RecommendResultProvider()),
+        ChangeNotifierProvider(create: (_) => StavkaNarudzbeProvider()),
       ],
       child: MaterialApp(
         title: 'RS II Material app',

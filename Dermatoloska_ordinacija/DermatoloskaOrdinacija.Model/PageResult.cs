@@ -8,7 +8,7 @@ namespace DermatoloskaOrdinacija.Model
 {
     public class PageResult<T>
     {
-        public List<T> Result { get; set; }
+        public List<T> Result { get; set; } = null!;
         public int? Count { get; set; }
     }
 }

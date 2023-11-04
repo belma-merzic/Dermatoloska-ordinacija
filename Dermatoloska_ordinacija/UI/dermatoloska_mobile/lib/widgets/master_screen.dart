@@ -1,12 +1,14 @@
 import 'package:dermatoloska_mobile/screens/cart_screen.dart';
 import 'package:dermatoloska_mobile/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../main.dart';
+import '../providers/korisnik_provider.dart';
 import '../screens/favorites_screen.dart';
 import '../screens/home_page_screen.dart';
 import '../screens/my_profile_screen.dart';
 import '../screens/orders_screen.dart';
 import '../screens/termin_screen.dart';
-import '../screens/zdravstveni_karton_screen.dart';
 
 class MasterScreenWidget extends StatefulWidget {
   Widget? child;
@@ -24,7 +26,24 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( 
-        title: widget.title_widget ?? Text(widget.title ?? ""), 
+        title: widget.title_widget ?? Text(widget.title ?? ""),
+        actions: [
+          TextButton.icon(
+              onPressed: (() {
+                if (!ModalRoute.of(context)!.isFirst) {
+                  Navigator.pop(context,
+                      'reload2');
+                }
+              }),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              label: Text(
+                "Back",
+                style: const TextStyle(color: Colors.white),
+              )),
+        ], 
       ),
       drawer: Drawer(
         child: ListView(
@@ -99,16 +118,19 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
                 );
               },
             ),
-            ListTile(
-              title: Text('Health Record'),
-              onTap: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ZdravstveniKartonScreen(),
-                  ),
-                );
-              },
-            ),
+             ListTile(
+        title: Text('Log Out'),
+        onTap: () {
+          final korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
+          korisniciProvider.logout();
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const Welcome()),
+            (route) => false,
+          );
+        },
+      ),
           ],
         ),
       ),

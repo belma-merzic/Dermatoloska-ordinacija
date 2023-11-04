@@ -8,7 +8,11 @@ namespace DermatoloskaOrdinacija.Model.Requests
 {
     public class StavkaNarudzbeInsertRequest
     {
-        public int? ProizvodID { get; set; }
+
         public int? Kolicina { get; set; }
+
+        public int? NarudzbaId { get; set; }
+
+        public int? ProizvodId { get; set; }
     }
 }

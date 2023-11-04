@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DermatoloskaOrdinacija.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,8 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555A",
                     Cijena = 50,
                     VrstaId = 1,
-                    StateMachine = "draft"
+                    StateMachine = "draft",
+                    Slika = File.ReadAllBytes("img/slika1.jpg")
                 },
                 new Proizvod()
                 {
@@ -98,7 +100,8 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555B",
                     Cijena = 40,
                     VrstaId = 2,
-                    StateMachine = "draft"
+                    StateMachine = "draft",
+                    Slika = File.ReadAllBytes("img/slika2.jpeg")
                 },
                 new Proizvod()
                 {
@@ -107,7 +110,8 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555C",
                     Cijena = 40,
                     VrstaId = 1,
-                    StateMachine = "draft"
+                    StateMachine = "draft",
+                    Slika = File.ReadAllBytes("img/slika3.png")
                 },
                 new Proizvod()
                 {
@@ -116,9 +120,71 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555D",
                     Cijena = 20,
                     VrstaId = 1,
-                    StateMachine = "draft"
-                }
+                    StateMachine = "draft",
+                    Slika = File.ReadAllBytes("img/slika4.jpg")
+                },
+                 new Proizvod()
+                 {
+                     ProizvodId = 5,
+                     Naziv = "SPF krema",
+                     Sifra = "555E",
+                     Cijena = 30,
+                     VrstaId = 1,
+                     StateMachine = "draft",
+                     Slika = File.ReadAllBytes("img/slika5.jpg")
+                 },
+                 new Proizvod()
+                 {
+                     ProizvodId = 6,
+                     Naziv = "SPF losion",
+                     Sifra = "555F",
+                     Cijena = 35,
+                     VrstaId = 2,
+                     StateMachine = "draft",
+                     Slika = File.ReadAllBytes("img/slika6.jpg")
+                 },
+                 new Proizvod()
+                 {
+                     ProizvodId = 7,
+                     Naziv = "Krema za područje oko očiju",
+                     Sifra = "555G",
+                     Cijena = 15,
+                     VrstaId = 1,
+                     StateMachine = "draft",
+                     Slika = File.ReadAllBytes("img/slika7.jpg")
+                 },
+                  new Proizvod()
+                  {
+                      ProizvodId = 8,
+                      Naziv = "Losion za tijelo",
+                      Sifra = "555H",
+                      Cijena = 50,
+                      VrstaId = 2,
+                      StateMachine = "draft",
+                      Slika = File.ReadAllBytes("img/slika8.jpg")
+                  },
+                  new Proizvod()
+                  {
+                      ProizvodId = 9,
+                      Naziv = "Krema za tijelo",
+                      Sifra = "555I",
+                      Cijena = 40,
+                      VrstaId = 1,
+                      StateMachine = "draft",
+                      Slika = File.ReadAllBytes("img/slika9.jpg")
+                  },
+                  new Proizvod()
+                  {
+                      ProizvodId = 10,
+                      Naziv = "Krema za osip",
+                      Sifra = "555J",
+                      Cijena = 60,
+                      VrstaId = 1,
+                      StateMachine = "draft",
+                      Slika = File.ReadAllBytes("img/slika10.jpg")
+                  }
             );
+
 
             modelBuilder.Entity<Dojam>().HasData(
                 new Dojam()

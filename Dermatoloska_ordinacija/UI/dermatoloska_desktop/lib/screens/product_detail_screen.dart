@@ -6,6 +6,7 @@ import 'package:dermatoloska_desktop/models/search_result.dart';
 import 'package:dermatoloska_desktop/models/vrste_proizvoda.dart';
 import 'package:dermatoloska_desktop/providers/product_provider.dart';
 import 'package:dermatoloska_desktop/providers/vrste_proizvoda_provider.dart';
+import 'package:dermatoloska_desktop/screens/product_list_screen.dart';
 import 'package:dermatoloska_desktop/widgets/master_screen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -76,15 +77,32 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Padding(padding: EdgeInsets.all(10),
             child: ElevatedButton(onPressed: () async {
-               final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
-    if (isPriceValid == null || !isPriceValid) {
+               //final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
+    /*if (isPriceValid == null || !isPriceValid) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fix the price before saving.'),backgroundColor: Colors.red,),);
+      return;
+    }*/
+       final isNameValid = _formKey.currentState!.fields['naziv']?.validate();
+    final isCodeValid = _formKey.currentState!.fields['sifra']?.validate();
+    final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
+    final isTypeValid = _formKey.currentState!.fields['vrstaId']?.validate();
+    //final isImageValid = _formKey.currentState!.fields['slika']?.validate();
+
+    if (isNameValid == null || !isNameValid ||
+        isCodeValid == null || !isCodeValid ||
+        isPriceValid == null || !isPriceValid ||
+        isTypeValid == null || !isTypeValid ) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Please fix the price before saving.'),
+          content: Text('Please fix all required fields before saving.'),
           backgroundColor: Colors.red,
         ),
       );
       return;
+    }
+
+     if (_base64Image == null || _base64Image!.isEmpty) {
+      _base64Image = base64Encode(File('assets/images/no-image.jpg').readAsBytesSync());
     }
               _formKey.currentState?.saveAndValidate();
 
@@ -92,27 +110,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     
               var request = new Map.from(_formKey.currentState!.value); 
               request['slika'] = _base64Image;
-
-              print(request['slika']);
               
               try {
                 if(widget.product == null) { 
                     await _productProvider.insert(request);
                      ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Product successfully added.'),
+                      content: Text('Product successfully added.  Please refresh Product page !'),
                       backgroundColor: Colors.green,
                      ),
                     );
+                    _formKey.currentState?.reset();
                 } else{
                   print(request);
                   await _productProvider.update(widget.product!.proizvodID!, request);
                    ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Product successfully updated.'),
+                      content: Text('Product successfully updated. Please refresh Product page !'),
                       backgroundColor: Colors.green,
                      ),
                     );
+                    Navigator.of(context).pop();
                 }
               }on Exception catch (e) {
                     showDialog(
@@ -143,6 +161,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           child: FormBuilderTextField(
             decoration: InputDecoration(labelText: "Product code"),
             name: 'sifra',
+             validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Product code is required';
+            }
+              return null; 
+            },
             ),
         ),
         SizedBox(width: 10,),
@@ -150,13 +174,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             child: FormBuilderTextField(
             decoration: InputDecoration(labelText: "Product name"),
             name: 'naziv',
+            validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Product name is required';
+            }
+              return null; 
+            },
             ),
           ),
       ],
     ),
     Row(
       children: [
-        Expanded(child: FormBuilderDropdown<String>(
+Expanded(child: FormBuilderDropdown<String>(
   name: 'vrstaId',
   decoration: InputDecoration(
     labelText: 'Product Type',
@@ -168,20 +198,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       },
     ),
   ),
+  validator: (value) {
+    if (value == null || value.isEmpty) {
+      return 'Product Type is required';
+    }
+    return null; // Povratna null vrijednost označava da nema greške
+  },
   items: VrsteProizvodaResult?.result
-      .map((item) => DropdownMenuItem(
-            alignment: AlignmentDirectional.center,
-            value: item.vrstaId.toString(),
-            child: Text(item.naziv ?? ""),
-          ))
-      .toList() ?? [],
+    .map((item) => DropdownMenuItem(
+      alignment: AlignmentDirectional.center,
+      value: item.vrstaId.toString(),
+      child: Text(item.naziv ?? ""),
+    ))
+    .toList() ?? [],
 ),),
+
 Expanded(
           child: FormBuilderTextField(
   decoration: InputDecoration(labelText: "Price"),
   name: 'cijena',
   validator: (value) {
-    if (value!.isEmpty) {
+    if (value == null || value.isEmpty) {
       return "Price is required";
     }
     final cijena = double.tryParse(value);
@@ -223,11 +260,14 @@ Expanded(
   String? _base64Image;
 
   Future getImage() async {
-    var result = await FilePicker.platform.pickFiles(type: FileType.image);
+  var result = await FilePicker.platform.pickFiles(type: FileType.image);
 
-    if(result != null && result.files.single.path != null){ 
-      _image = File(result.files.single.path!);
-      _base64Image = base64Encode(_image!.readAsBytesSync());
-    }
+  if (result != null && result.files.single.path != null) {
+    _image = File(result.files.single.path!);
+    _base64Image = base64Encode(_image!.readAsBytesSync());
+  } else {
+    // Korisnik nije odabrao sliku, postavite zadani URL slike
+    _base64Image = base64Encode(File('assets/no-image.jpg').readAsBytesSync());
   }
+}
 }

@@ -55,6 +55,7 @@ services:
     build:
       context: ../DermOrdDodatni
     environment:
+      - ConnectionStrings:DefaultConnection=Server=dermatoloska-sql,1433;Database=_200019;User=sa;Password=QWElkj132!;ConnectRetryCount=0;TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
       - RABBITMQ_HOST=rabbitMQ
       - RABBITMQ_USERNAME=guest

@@ -1,4 +1,6 @@
+import 'package:dermatoloska_desktop/models/stavkaNarudzbe.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -9,6 +11,8 @@ import '../models/search_result.dart';
 import '../models/zdravstveni_karton.dart';
 import '../providers/korisnik_provider.dart';
 import '../providers/orders_provider.dart';
+import '../providers/product_provider.dart';
+import '../providers/stavka_narudzbe_provider.dart';
 import '../providers/zdravstveni_karton_provider.dart';
 import 'package:printing/printing.dart';
 
@@ -23,13 +27,20 @@ class _IzvjestajScreenState extends State<IzvjestajScreen> {
   late KorisniciProvider _korisniciProvider;
   late OrdersProvider _narudzbeProvider;
   late ZdravstveniKartonProvider _zdravstveniKartonProvider;
+  late StavkaNarudzbeProvider stavkaNarudzbeProvider;
+  late ProductProvider productProvider;
+
+
 
   SearchResult<Korisnik>? result;
   List<Narudzba>? _narudzbe;
   List<ZdravstveniKarton>? _zdravstveniKarton;
+  List<StavkaNarudzbe> stavkeNarudzbe = [];
 
   int? _selectedPatient;
   String _selectedReportType = 'Narudzbe';
+
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -37,6 +48,10 @@ class _IzvjestajScreenState extends State<IzvjestajScreen> {
     _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
     _narudzbeProvider = Provider.of<OrdersProvider>(context, listen: false);
     _zdravstveniKartonProvider = Provider.of<ZdravstveniKartonProvider>(context, listen: false);
+    stavkaNarudzbeProvider = StavkaNarudzbeProvider();
+    productProvider = ProductProvider();
+
+
     _fetchPacijenti();
   }
 
@@ -99,6 +114,7 @@ Future<void> _fetchDataForSelectedType(int patientId) async {
     }
   }
 
+
 Widget _buildContent() {
   if (_selectedPatient == null) {
     return Text('Please select a patient');
@@ -144,13 +160,13 @@ Widget _buildContent() {
 
 
   Widget _buildNarudzbeContent() {
-    print("usao u _buildNarudzbeContent");
     return Container(
     height: 300, 
     child: ListView.builder(
       itemCount: _narudzbe!.length,
       itemBuilder: (context, index) {
         var narudzba = _narudzbe![index];
+        //var data =  _fetchStavkeNarudzbe(narudzba);
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: MouseRegion(
@@ -165,13 +181,60 @@ Widget _buildContent() {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(narudzba.iznos.toString()),
+                    Text("${narudzba.iznos.toString()} KM"),
                     SizedBox(height: 8),
                     Text(
                       'Created on: ${narudzba.datum != null ? DateFormat('yyyy-MM-dd').format(narudzba.datum!) : 'Unknown Date'}',
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
+               ElevatedButton(
+  onPressed: () async {
+    await _fetchStavkeNarudzbe(narudzba);
+    // ignore: use_build_context_synchronously
+    showDialog(context: context, builder: (BuildContext context) {
+      print(stavkeNarudzbe);
+      return AlertDialog(
+        title: Text("Details"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (stavkeNarudzbe != null) 
+              for (var stavka in stavkeNarudzbe!) // Prolazite kroz sve stavke narudžbe
+                Column(
+                  children: [
+                    Text("Quantity: ${stavka.kolicina.toString()}"),
+                    //Text("Product ID: ${stavka.proizvodId.toString()}"),
+                    FutureBuilder<String>(
+                      future: getProductName(stavka.proizvodId),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Text("Product Name: ${snapshot.data ?? 'N/A'}");
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                    Divider(), // razdvajač između stavki
                   ],
+                ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Zatvori"),
+          ),
+        ],
+      );
+    });
+  },
+  child: Text("Detalji"),
+),
+
+
+                   ],
                 ),
               ),
             ),
@@ -181,6 +244,50 @@ Widget _buildContent() {
     ),
     );
   }
+
+  Future<String> getProductName(int? proizvodId) async{
+     if (proizvodId == null) {
+      return 'N/A';
+    }
+
+    try {
+      var product = await productProvider.getById(proizvodId);
+      print(product.naziv);
+      return product.naziv ?? 'N/A';
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
+_fetchStavkeNarudzbe(Narudzba narudzba) async {
+  print("NARUDZBA KOJA JE POSLANA U FUNKCIJU");
+  print(narudzba.brojNarudzbe);
+  if (narudzba == null) {
+    setState(() {
+      isLoading = false;
+    });
+    return;
+  }
+  try {
+    var narudzbaId = narudzba.narudzbaId;
+    if (narudzbaId != null) {
+      var result = await stavkaNarudzbeProvider.getStavkeNarudzbeByNarudzbaId(narudzbaId);
+      setState(() {
+        stavkeNarudzbe = result;
+        isLoading = false;
+      });
+    }
+  } catch (e) {
+    // Handle error
+    print(e);
+    setState(() {
+      isLoading = false;
+      stavkeNarudzbe = []; 
+    });
+  }
+}
+
+
 
   Widget _buildZdravstveniKartonContent() {
     return Column(
@@ -200,7 +307,7 @@ Widget _buildContent() {
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
               pw.Text('Broj narudzbe: ${narudzba.brojNarudzbe ?? ''}'),
-              pw.Text('Iznos: ${narudzba.iznos}'),
+              pw.Text('Iznos: ${narudzba.iznos} KM'),
               pw.Text('Status: ${narudzba.status}'),
               pw.Text(
                 'Datum: ${narudzba.datum != null ? DateFormat('yyyy-MM-dd').format(narudzba.datum!) : 'Unknown Date'}',
@@ -328,4 +435,5 @@ Future<pw.Document> _generatePDFReport() async {
       ),
     );
   }
+  
 }
