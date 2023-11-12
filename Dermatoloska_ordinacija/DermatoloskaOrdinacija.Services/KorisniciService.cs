@@ -4,6 +4,7 @@ using DermatoloskaOrdinacija.Model;
 using DermatoloskaOrdinacija.Model.Requests;
 using DermatoloskaOrdinacija.Model.SearchObjects;
 using DermatoloskaOrdinacija.Services.Database;
+using DermatoloskaOrdinacija.Services.ProizvodiStateMachine;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -108,6 +109,12 @@ namespace DermatoloskaOrdinacija.Services
                 throw new UserException("Invalid username or password.");
 
             return _mapper.Map<Model.Korisnik>(entity);
+        }
+
+        public override async Task<Model.Korisnik> Update(int id, KorisnikUpdateRequest update)
+        {
+            var entity = await _context.Korisniks.FindAsync(id);
+            return await base.Update(id, update);
         }
     }
 }

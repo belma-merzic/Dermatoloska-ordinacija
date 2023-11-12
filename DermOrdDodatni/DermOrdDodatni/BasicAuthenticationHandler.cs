@@ -24,7 +24,7 @@ namespace DermOrdDodatni
                 return AuthenticateResult.Fail("Missing header");
             }
 
-            Model.Korisnik korisnik = null;
+            Model.Korisnik? korisnik = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);

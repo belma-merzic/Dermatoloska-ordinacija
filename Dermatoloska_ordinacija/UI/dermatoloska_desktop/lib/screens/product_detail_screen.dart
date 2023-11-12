@@ -225,8 +225,8 @@ Expanded(
     if (cijena == null) {
       return "Price must be a number";
     }
-    if (cijena < 0 || cijena > 10000) {
-      return "Price must be between 0 and 10,000";
+    if (cijena < 1 || cijena > 10000) {
+      return "Price must be between 1 and 10,000";
     }
     return null; 
   },

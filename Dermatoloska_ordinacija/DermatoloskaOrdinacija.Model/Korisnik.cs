@@ -21,6 +21,8 @@ namespace DermatoloskaOrdinacija.Model
         public string? Telefon { get; set; }
 
         public string? Adresa { get; set; }
+        public byte[]? Slika { get; set; }
+
         public int? SpolId { get; set; }
 
 

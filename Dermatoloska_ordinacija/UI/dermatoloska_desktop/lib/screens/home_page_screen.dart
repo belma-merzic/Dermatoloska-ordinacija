@@ -225,7 +225,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Item "${novost.naslov}" deleted successfully.'),
+          content: Text('News "${novost.naslov}" deleted successfully.'),
         ),
       );
     } catch (e) {

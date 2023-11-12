@@ -49,6 +49,7 @@ dependencies:
   http_auth: ^1.0.3
   webview_flutter: ^3.0.4
   shared_preferences: ^2.2.2
+  image_picker: ^1.0.4
 
 dev_dependencies:
   json_serializable: ^6.7.0

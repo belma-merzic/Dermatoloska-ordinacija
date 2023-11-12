@@ -24,6 +24,9 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
   int? _modifiedDoktorId;
   int? _modifiedPacijentId;
 
+    bool _isDateModified = false;
+  bool _isSaveButtonEnabled = false;
+
   late KorisniciProvider _korisniciProvider;
   late TerminiProvider _terminiProvider;
   SearchResult<Korisnik>? result;
@@ -163,6 +166,8 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
                             selectedTime.hour,
                             selectedTime.minute,
                           );
+                          _isDateModified = true;
+                          _isSaveButtonEnabled = true;
                         });
                       }
                     }
@@ -170,13 +175,13 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
                   child: Text('Change Date'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: _isSaveButtonEnabled ? ()  {
                     if (_isEditing) {
                       _saveModifiedTermin();
                     } else {
                       _saveNewTermin();
                     }
-                  },
+                  } : null,
                   child: Text('Save'),
                 ),
               ],

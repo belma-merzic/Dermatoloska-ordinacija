@@ -12,9 +12,10 @@ class Korisnik {
   String? email;
   String? telefon;
   String? adresa;
+  String? slika;
   TipKorisnika? tipKorisnika;
 
-  Korisnik(this.korisnikId, this.ime, this.prezime, this.username, this.email, this.telefon, this.adresa, this.tipKorisnika);
+  Korisnik(this.korisnikId, this.ime, this.prezime, this.username, this.email, this.telefon, this.adresa, this.slika, this.tipKorisnika);
 
   factory Korisnik.fromJson(Map<String, dynamic> json) => _$KorisnikFromJson(json);
 

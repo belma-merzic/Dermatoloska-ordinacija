@@ -1,5 +1,4 @@
 using DermOrdDodatni;
-using DermOrdDodatni;
 using DermOrdDodatni.Database;
 using DermOrdDodatni.Services;
 using Microsoft.AspNetCore.Authentication;

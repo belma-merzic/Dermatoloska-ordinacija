@@ -1,7 +1,9 @@
+import 'package:dermatoloska_mobile/providers/korisnik_provider.dart';
 import 'package:dermatoloska_mobile/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/novost.dart';
 
 class NovostDetailScreen extends StatefulWidget {
@@ -24,6 +26,8 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
   @override
   void initState() { 
     super.initState();
+    initForm();
+
     _initialValue = {
       'naslov' : widget.novost?.naslov,
       'sadrzaj' : widget.novost?.sadrzaj,
@@ -31,6 +35,7 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
       };
       initForm();
   }
+
 
   @override
   void didChangeDependencies() {
@@ -47,9 +52,10 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
     setState(() {
       isLoading = false;
     });
-
      _setCurrentDate(); 
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -82,19 +88,41 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
           ),
           SizedBox(height: 10), 
           FormBuilderTextField(
-            decoration: InputDecoration(labelText: "Content"),
-            name: 'sadrzaj',
-            readOnly: true,
-          ),
-          SizedBox(height: 10), 
-          FormBuilderTextField(
             decoration: InputDecoration(labelText: "Publication Date"),
             name: 'datumObjave',
             controller: _dateController,
             readOnly: true,
           ),
+          SizedBox(height: 30,),
+            Text(
+          'Content',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+            Container(
+          width: 400, // Set the width to 80% of the screen width
+          height: 250, // Set the height to your desired value for a square shape
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: FormBuilderTextField(
+                name: 'sadrzaj',
+                readOnly: true,
+                maxLines: null, // Allow unlimited vertical expansion
+              ),
+            ),
+          ),
+            ),
         ],
       ),
     );
   }
+
+
 }

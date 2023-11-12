@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:dermatoloska_mobile/models/korisnik.dart'; 
 import 'package:dermatoloska_mobile/providers/korisnik_provider.dart'; 
@@ -8,10 +10,17 @@ import 'package:dermatoloska_mobile/widgets/master_screen.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:dermatoloska_mobile/utils/util.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 import '../providers/zdravstveni_karton_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart'; 
+import 'package:image_picker/image_picker.dart';
 
 
 class MyProfileScreen extends StatefulWidget {
@@ -28,9 +37,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   late Future<Korisnik> _korisnikFuture;
   bool _isLoading = true;
 
+    ImageProvider _profileImage = AssetImage('assets/images/no-image.jpg');
+
     final ZdravstveniKartonProvider _zdravstveniKartonProvider = ZdravstveniKartonProvider();
   String? _karton;
   int? _zdravstveniKartonId; 
+
+    File? _image; // Store the selected image file
+  String? _base64Image;
+
 
   @override
   void initState() {
@@ -56,16 +71,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     setState(() {           ////////////////////////////////////////////////////////////////////////////////
       _isLoading = true;
     });
-
-    /*Future<int> getPatientId() async {
-      final pacijenti = await _korisniciProvider.get(filter: {
-        'tipKorisnika': 'pacijent',
-      });
-
-      final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
-
-      return pacijent.korisnikId!;
-    }*/
 
     final pacijentId = await getPatientId();  ////////////////////////////////////////////////////////////////////////////////
 
@@ -138,6 +143,61 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 20),
+                  /////////////////////////////////////////////////////////////////////
+                 
+GestureDetector(
+// Inside your GestureDetector for image selection
+onTap: () async {
+  final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+   final image = File(pickedImage!.path);
+
+    // Convert the image file to bytes (Uint8List)
+    final imageBytes = await image.readAsBytes();
+
+    // Convert the bytes to a base64-encoded string
+    final base64String = base64Encode(imageBytes);
+
+    // Update korisnikData.slika with the base64String
+    setState(() {
+      korisnikData?.slika = base64String;
+    });
+},
+
+// Inside your GestureDetector for displaying the current profile picture
+child: Container(
+  width: 150,
+  height: 150,
+  decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    border: Border.all(
+      color: Colors.blue,
+      width: 2,
+    ),
+  ),
+  child: ClipOval(
+    child: (korisnikData!.slika != null && korisnikData.slika!.isNotEmpty)//korisnikData!.slika != null 
+      ? Image.memory(
+          base64Decode(korisnikData.slika!), // Display the current profile picture
+          width: 150,
+          height: 150,
+          fit: BoxFit.cover,
+        )
+        : Image.asset(
+            "assets/images/no-image.jpg", // Provide a local placeholder image
+            width: 150,
+            height: 150,
+            fit: BoxFit.cover,
+          ),
+  ),
+),
+
+),
+
+
+
+                  //////////////////////////////////////////////////////////////////////
+                  SizedBox(height: 20),
                   FormBuilderTextField(
                       name: 'ime', 
                       initialValue: korisnikData?.ime ?? '',
@@ -168,7 +228,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   FormBuilderTextField(
                       name: 'email',
                       initialValue: korisnikData?.email ?? '',
-                      enabled: true, // Read-only
+                      enabled: true, 
                       decoration: InputDecoration(
                         labelText: 'Email',
                         prefixIcon: Icon(Icons.email),
@@ -198,7 +258,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     if (_formKey.currentState != null) {
                       if (_formKey.currentState!.saveAndValidate()) {
                         var request = Map<String, dynamic>.from(_formKey.currentState!.value);
-
+                       
                        if (request['email'].isEmpty || request['telefon'].isEmpty || request['adresa'].isEmpty) {
                          showDialog(
                             context: context,
@@ -215,7 +275,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         );
                        return; 
                        }
-
 
                     if (!RegExp(r"^(?:\+?\d{10}|\d{9})$").hasMatch(request['telefon'])) {
                         showDialog(
@@ -250,6 +309,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         );
                       return;
                     }
+
+                     if (korisnikData!.slika != null) {
+          // If korisnikData.slika is not null, add it to the request
+          request['slika'] = korisnikData.slika;
+        }
+
+        print(request);
 
                    try {
                      await _korisniciProvider.update(korisnikData!.korisnikId!, request);
@@ -377,5 +443,4 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       onLayout: (format) async => pdf.save(),
     );
   }
-
   }

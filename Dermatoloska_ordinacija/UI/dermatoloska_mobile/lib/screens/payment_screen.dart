@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:dermatoloska_mobile/models/korisnik.dart';
 import 'package:dermatoloska_mobile/models/transakcija.dart';
+import 'package:dermatoloska_mobile/providers/korisnik_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_paypal/flutter_paypal.dart';
@@ -8,9 +10,12 @@ import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:provider/provider.dart';
 
 import '../models/TransakcijaUpsertRequest.dart';
+import '../providers/cart_provider.dart';
 import '../providers/product_provider.dart';
 import '../providers/transakcija_provider.dart';
 import 'package:http/http.dart' as http;
+
+import '../utils/util.dart';
 
 
 class PaymentScreen extends StatefulWidget {
@@ -18,6 +23,7 @@ class PaymentScreen extends StatefulWidget {
   final int korisnikId;
   final int? narudzbaId; 
   final double? iznos;
+
 
   PaymentScreen({required this.items, required this.korisnikId, required this.narudzbaId, required this.iznos, super.key});
 
@@ -30,14 +36,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
   late List<Map<String, dynamic>> itemList = [];
   late ProductProvider _productProvider;
   late TransakcijaProvider _transakcijaProvider;
+   late CartProvider _cartProvider;
+   late KorisniciProvider _korisniciProvider;
+
 
   @override
   void initState() {
     super.initState();
     _productProvider = Provider.of<ProductProvider>(context, listen: false);
     _transakcijaProvider = Provider.of<TransakcijaProvider>(context, listen: false);
+    _cartProvider = Provider.of<CartProvider>(context, listen: false);
+    _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
+
     total = calculateTotalAmount(widget.items);
     _navigateToPaypalCheckout();
+
   }
 
 void _navigateToPaypalCheckout() async {
@@ -59,7 +72,7 @@ void _navigateToPaypalCheckout() async {
             "details": {
               "subtotal": totalAmount.toStringAsFixed(2),
               "shipping": '0',
-              "shipping_discount": 0
+              "shipping_discount": 0,
             },
           },
           "description": "The payment transaction description.",
@@ -71,7 +84,9 @@ void _navigateToPaypalCheckout() async {
       ],
       note: "Contact us for any questions on your order.",
       onSuccess: (Map params) async {
+        print("BELAMMAMAMAMMAAMMAMMA-------------------------");
         print("onSuccess: $params");
+      if (params['data']['state'] == 'approved') {
 
        Transakcija request = Transakcija(
         null,
@@ -81,6 +96,20 @@ void _navigateToPaypalCheckout() async {
         params['data']['state'],
         );
   await _transakcijaProvider.insert(request);
+
+print(_cartProvider.cart.items);
+  _cartProvider.cart.items.clear();
+
+          // Show a success message to the user
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Your order has been successfully processed.'),
+              backgroundColor: Colors.green,
+            ),
+          );
+      }else{
+        print('Payment was not successful');
+      }
       },
       onError: (error) {
         print("onError: $error");

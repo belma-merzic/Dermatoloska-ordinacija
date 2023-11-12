@@ -90,6 +90,7 @@ Future<T> getById(int id) async {
 
   Future<T> update(int id, [dynamic request]) async{
     var url = "$_baseUrl$_endpoint/$id";
+    print(url);
     var uri = Uri.parse(url);
     var headers = createHeaders();
 

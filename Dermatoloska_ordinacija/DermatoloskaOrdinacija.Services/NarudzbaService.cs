@@ -3,6 +3,7 @@ using DermatoloskaOrdinacija.Model;
 using DermatoloskaOrdinacija.Model.Requests;
 using DermatoloskaOrdinacija.Model.SearchObjects;
 using DermatoloskaOrdinacija.Services.Database;
+using DermatoloskaOrdinacija.Services.ProizvodiStateMachine;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -49,5 +50,41 @@ namespace DermatoloskaOrdinacija.Services
 
             return base.AddFilter(query, search);
         }
+
+        public override async Task<Model.Narudzba> Update(int id, NarudzbaUpdateRequest update)
+        {
+            var entity = await _context.Narudzbas.FindAsync(id);
+
+            if (!IsValidStatusTransition(entity.Status, update.Status))
+            {
+                throw new UserException("Invalid status transition");
+            }
+            else
+            {
+                return await base.Update(id, update);
+            }
+
+        }
+
+        private bool IsValidStatusTransition(string? currentStatus, string? newStatus)
+        {
+            if (currentStatus == newStatus)
+            {
+                return true;
+            }
+
+            switch (currentStatus)
+            {
+                case "Pending":
+                    return newStatus == "Completed" || newStatus == "Cancelled";
+                case "Cancelled":
+                    return newStatus == "Pending";
+                case "Completed":
+                    return newStatus == "Pending";
+                default:
+                    throw new UserException("Invalid status transition");
+            }
+        }
+
     }
 }

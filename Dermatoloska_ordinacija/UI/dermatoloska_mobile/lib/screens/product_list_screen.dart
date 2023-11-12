@@ -12,6 +12,7 @@ import '../providers/cart_provider.dart';
 import '../providers/favorites_provider.dart';
 import 'package:provider/provider.dart';
 
+
 import '../providers/recommend_result_provider.dart';
 
 class ProductListScreen extends StatefulWidget {

@@ -1,10 +1,12 @@
-﻿using DermOrdDodatni.Model;
+﻿using DermOrdDodatni.Database;
+using DermOrdDodatni.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace DermOrdDodatni.Database
 {
@@ -25,13 +27,13 @@ namespace DermOrdDodatni.Database
                 }
             );
 
-            modelBuilder.Entity<TipKorisnika>().HasData(
-                new TipKorisnika()
+            modelBuilder.Entity<DermOrdDodatni.Database.TipKorisnika>().HasData(
+                new DermOrdDodatni.Database.TipKorisnika()
                 {
                     TipKorisnikaId = 1,
                     Tip = "Pacijent"
                 },
-                new TipKorisnika()
+                new DermOrdDodatni.Database.TipKorisnika()
                 {
                     TipKorisnikaId = 2,
                     Tip = "Uposlenik"
@@ -51,8 +53,8 @@ namespace DermOrdDodatni.Database
                 }
             );
 
-            modelBuilder.Entity<Korisnik>().HasData(
-                new Korisnik()
+            modelBuilder.Entity<DermOrdDodatni.Database.Korisnik>().HasData(
+                new DermOrdDodatni.Database.Korisnik()
                 {
                     KorisnikId = 1,
                     Ime = "uposlenik",
@@ -66,7 +68,7 @@ namespace DermOrdDodatni.Database
                     TipKorisnikaId = 2,
                     SpolId = 1
                 },
-                new Korisnik()
+                new DermOrdDodatni.Database.Korisnik()
                 {
                     KorisnikId = 2,
                     Ime = "pacijent",
@@ -90,8 +92,8 @@ namespace DermOrdDodatni.Database
                     Sifra = "555A",
                     Cijena = 50,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika1.jpg")
+                    StateMachine = "draft"//,
+                                          // Slika = File.ReadAllBytes("img/slika1.jpg")
                 },
                 new Proizvod()
                 {
@@ -100,8 +102,8 @@ namespace DermOrdDodatni.Database
                     Sifra = "555B",
                     Cijena = 40,
                     VrstaId = 2,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika2.jpeg")
+                    StateMachine = "draft"//,
+                    //Slika = File.ReadAllBytes("img/slika2.jpeg")
                 },
                 new Proizvod()
                 {
@@ -110,8 +112,8 @@ namespace DermOrdDodatni.Database
                     Sifra = "555C",
                     Cijena = 40,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika3.png")
+                    StateMachine = "draft"//,
+                    //Slika = File.ReadAllBytes("img/slika3.png")
                 },
                 new Proizvod()
                 {
@@ -120,8 +122,8 @@ namespace DermOrdDodatni.Database
                     Sifra = "555D",
                     Cijena = 20,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika4.jpg")
+                    StateMachine = "draft"//,
+                    //Slika = File.ReadAllBytes("img/slika4.jpg")
                 },
                  new Proizvod()
                  {
@@ -130,8 +132,8 @@ namespace DermOrdDodatni.Database
                      Sifra = "555E",
                      Cijena = 30,
                      VrstaId = 1,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika5.jpg")
+                     StateMachine = "draft"//,
+                     //Slika = File.ReadAllBytes("img/slika5.jpg")
                  },
                  new Proizvod()
                  {
@@ -140,8 +142,8 @@ namespace DermOrdDodatni.Database
                      Sifra = "555F",
                      Cijena = 35,
                      VrstaId = 2,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika6.jpg")
+                     StateMachine = "draft"//,
+                     //Slika = File.ReadAllBytes("img/slika6.jpg")
                  },
                  new Proizvod()
                  {
@@ -150,8 +152,8 @@ namespace DermOrdDodatni.Database
                      Sifra = "555G",
                      Cijena = 15,
                      VrstaId = 1,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika7.jpg")
+                     StateMachine = "draft"//,
+                     //Slika = File.ReadAllBytes("img/slika7.jpg")
                  },
                   new Proizvod()
                   {
@@ -160,8 +162,8 @@ namespace DermOrdDodatni.Database
                       Sifra = "555H",
                       Cijena = 50,
                       VrstaId = 2,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika8.jpg")
+                      StateMachine = "draft"//,
+                      //Slika = File.ReadAllBytes("img/slika8.jpg")
                   },
                   new Proizvod()
                   {
@@ -170,8 +172,8 @@ namespace DermOrdDodatni.Database
                       Sifra = "555I",
                       Cijena = 40,
                       VrstaId = 1,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika9.jpg")
+                      StateMachine = "draft"//,
+                      //Slika = File.ReadAllBytes("img/slika9.jpg")
                   },
                   new Proizvod()
                   {
@@ -180,8 +182,8 @@ namespace DermOrdDodatni.Database
                       Sifra = "555J",
                       Cijena = 60,
                       VrstaId = 1,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika10.jpg")
+                      StateMachine = "draft"//,
+                      //Slika = File.ReadAllBytes("img/slika10.jpg")
                   }
             );
 

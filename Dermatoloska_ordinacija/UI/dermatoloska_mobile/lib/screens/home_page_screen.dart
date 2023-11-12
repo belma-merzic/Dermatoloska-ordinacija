@@ -114,6 +114,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
     );
   }
 
+  String? _truncateString(String? text) {
+  if (text != null && text.length > 100) {
+    return text.substring(0, 100) + '...';
+  } else {
+    return text;
+  }
+}
+
+
   Widget _buildDataListView() {
     if (isLoading) {
       return Expanded(
@@ -146,18 +155,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: ListTile(
-                  onTap: () {
+                  /*onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => NovostDetailScreen(novost: novost),
                       ),
                     );
-                  },
+                  },*/
                   title: Text(novost.naslov ?? ''),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(novost.sadrzaj ?? ''),
+                      //Text(novost.sadrzaj ?? ''),
+                      Text(_truncateString(novost.sadrzaj) ?? ''),
                       SizedBox(height: 8),
                       Text(
                         'Published on: ${DateFormat('yyyy-MM-dd').format(novost.datumObjave ?? DateTime.now())}',
@@ -165,6 +175,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       ),
                     ],
                   ),
+                  trailing: ElevatedButton(
+  onPressed: () {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NovostDetailScreen(novost: novost),
+      ),
+    );
+  },
+  child: Text('Prikaži više'),
+),
+
                 ),
               ),
             ),

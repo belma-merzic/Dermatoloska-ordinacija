@@ -90,8 +90,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555A",
                     Cijena = 50,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika1.jpg")
+                    StateMachine = "draft"
                 },
                 new Proizvod()
                 {
@@ -100,8 +99,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555B",
                     Cijena = 40,
                     VrstaId = 2,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika2.jpeg")
+                    StateMachine = "draft"
                 },
                 new Proizvod()
                 {
@@ -110,8 +108,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555C",
                     Cijena = 40,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika3.png")
+                    StateMachine = "draft"
                 },
                 new Proizvod()
                 {
@@ -120,8 +117,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                     Sifra = "555D",
                     Cijena = 20,
                     VrstaId = 1,
-                    StateMachine = "draft",
-                    Slika = File.ReadAllBytes("img/slika4.jpg")
+                    StateMachine = "draft"
                 },
                  new Proizvod()
                  {
@@ -130,8 +126,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                      Sifra = "555E",
                      Cijena = 30,
                      VrstaId = 1,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika5.jpg")
+                     StateMachine = "draft"
                  },
                  new Proizvod()
                  {
@@ -140,8 +135,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                      Sifra = "555F",
                      Cijena = 35,
                      VrstaId = 2,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika6.jpg")
+                     StateMachine = "draft"
                  },
                  new Proizvod()
                  {
@@ -150,8 +144,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                      Sifra = "555G",
                      Cijena = 15,
                      VrstaId = 1,
-                     StateMachine = "draft",
-                     Slika = File.ReadAllBytes("img/slika7.jpg")
+                     StateMachine = "draft"
                  },
                   new Proizvod()
                   {
@@ -160,8 +153,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                       Sifra = "555H",
                       Cijena = 50,
                       VrstaId = 2,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika8.jpg")
+                      StateMachine = "draft"
                   },
                   new Proizvod()
                   {
@@ -170,8 +162,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                       Sifra = "555I",
                       Cijena = 40,
                       VrstaId = 1,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika9.jpg")
+                      StateMachine = "draft"
                   },
                   new Proizvod()
                   {
@@ -180,8 +171,7 @@ namespace DermatoloskaOrdinacija.Services.Database
                       Sifra = "555J",
                       Cijena = 60,
                       VrstaId = 1,
-                      StateMachine = "draft",
-                      Slika = File.ReadAllBytes("img/slika10.jpg")
+                      StateMachine = "draft"
                   }
             );
 

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dermatoloska_mobile/providers/korisnik_provider.dart';
 import 'package:dermatoloska_mobile/providers/order_provider.dart';
 import 'package:dermatoloska_mobile/screens/payment_screen.dart';
@@ -48,7 +50,11 @@ class _CartScreenState extends State<CartScreen> {
       title: "Cart",
       child: Column(
         children: [
-          Expanded(child: _buildProductCardList()),
+          Expanded(
+          child : _cartProvider.cart.items.isNotEmpty
+          ? _buildProductCardList()
+          : Center(child: Text("Your cart is empty.")),
+          ),
           SizedBox(
             height: 15,
           ),
@@ -131,6 +137,40 @@ Widget _buildProductCard(CartItem item) {
       return pacijent.korisnikId!;
     }
 
+
+  
+
+    Future<String> getPatientLastName() async {
+      final pacijenti = await _korisniciProvider.get(filter: {
+        'tipKorisnika': 'pacijent',
+      });
+
+      final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
+
+      return pacijent.prezime!;
+    }
+
+     Future<String> getPatientAddress() async {
+      final pacijenti = await _korisniciProvider.get(filter: {
+        'tipKorisnika': 'pacijent',
+      });
+
+      final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
+
+      return pacijent.adresa!;
+    }
+
+    
+     Future<String> getPatientPhone() async {
+      final pacijenti = await _korisniciProvider.get(filter: {
+        'tipKorisnika': 'pacijent',
+      });
+
+      final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
+
+      return pacijent.telefon!;
+    }
+
    
 Widget _buildBuyButton() {
   return TextButton(
@@ -139,8 +179,8 @@ Widget _buildBuyButton() {
       backgroundColor: Color.fromARGB(255, 168, 204, 235),
       foregroundColor: Colors.black,
     ),
-    onPressed: () async {
-      total = 0;
+    onPressed: _cartProvider.cart.items.isEmpty ? null : () async {
+      //total = 0;
       List<Map<String, dynamic>> items = [];
 
       _cartProvider.cart.items.forEach((item) {
@@ -153,13 +193,17 @@ Widget _buildBuyButton() {
       });
       int patientId = await getPatientId();
       
+
       Map<String, dynamic> order = {
         "items": items,
         "korisnikId": await getPatientId(),
       };
 
       var response = await _orderProvider.insert(order);
+
       _cartProvider.cart.items.clear();
+
+      total = 0.00;
       setState(() {});
 
       Navigator.of(context).push(

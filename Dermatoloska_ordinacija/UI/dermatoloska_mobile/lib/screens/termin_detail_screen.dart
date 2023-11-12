@@ -21,12 +21,16 @@ class TerminDetailScreen extends StatefulWidget {
 class _TerminDetailScreenState extends State<TerminDetailScreen> {
   late DateTime _modifiedDatum;
   int? _modifiedDoktorId;
+  late DateTime _initialDateTime;
 
   late KorisniciProvider _korisniciProvider;
   late TerminiProvider _terminiProvider;
   SearchResult<Korisnik>? result;
   List<Termin>? _termini;
   int? _selectedDoctor;
+
+  bool _isDateModified = false;
+  bool _isSaveButtonEnabled = false;
 
   @override
   void initState() {
@@ -36,6 +40,8 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
 
     _modifiedDatum = widget.termin?.datum ?? DateTime.now();
     _modifiedDoktorId = widget.termin?.korisnikIdDoktor;
+
+   _initialDateTime = _modifiedDatum;
 
     _fetchPacijenti();
     _fetchTerminiForPatient();
@@ -152,16 +158,18 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
                             selectedTime.hour,
                             selectedTime.minute,
                           );
+                          _isDateModified = true;
+                          _isSaveButtonEnabled = true;
                         });
                       }
                     }
                   },
-                  child: Text('Change Date'),
+                  child: Text('Select Date and Time'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: _isSaveButtonEnabled ? () {
                     _saveNewTermin();
-                  },
+                  } : null,
                   child: Text('Save'),
                 ),
               ],
@@ -172,52 +180,71 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     );
   }
 
-  void _saveNewTermin() async {
-    if (_termini == null) {
-      return; 
-    }
-Future<int> getPatientId() async {
-      final pacijenti = await _korisniciProvider.get(filter: {
-        'tipKorisnika': 'pacijent',
-      });
+void _saveNewTermin() async {
+  if (_termini == null) {
+    return;
+  }
 
-      final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
+  Future<int> getPatientId() async {
+    final pacijenti = await _korisniciProvider.get(filter: {
+      'tipKorisnika': 'pacijent',
+    });
 
-      return pacijent.korisnikId!;
-    }
-    final pacijent = await getPatientId();
-    final selectedDateTime = _modifiedDatum;
+    final pacijent = pacijenti.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
 
-print("printanje termina");
-    print(_termini);
+    return pacijent.korisnikId!;
+  }
 
-    if (_isDateTimeOccupied(selectedDateTime)) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Date and Time Occupied'),
-            content: Text('The selected date and time are already occupied.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      final newTermin = Termin(
-        null,
-        _selectedDoctor,
-        pacijent,
-        _modifiedDatum,
-      );
+  final pacijent = await getPatientId();
+  final selectedDateTime = _modifiedDatum;
 
-      try {
+  if (_isDateTimeOccupied(selectedDateTime)) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Date and Time Occupied'),
+          content: Text('The selected date and time are already occupied.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    final newTermin = Termin(
+      null,
+      _selectedDoctor,
+      pacijent,
+      _modifiedDatum,
+    );
+
+    try {
+      // Provjerite zauzetost datuma i vremena prije nego što se pokuša dodati novi termin
+      if (_isDateTimeOccupied(_modifiedDatum)) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Date and Time Occupied'),
+              content: Text('The selected date and time are already occupied.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
         final insertedTermin = await TerminiProvider().insert(newTermin);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -226,9 +253,13 @@ print("printanje termina");
           ),
         );
         Navigator.pop(context, insertedTermin);
-      } catch (e) {
-        print(e);
       }
+    } catch (e) {
+      print(e);
     }
   }
+}
+
+
+
 }

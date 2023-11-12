@@ -92,6 +92,9 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<byte[]>("Slika")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<int?>("SpolId")
                         .HasColumnType("int")
                         .HasColumnName("SpolID");
@@ -187,7 +190,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         {
                             NarudzbaId = 1,
                             BrojNarudzbe = "#1",
-                            Datum = new DateTime(2023, 11, 3, 18, 23, 47, 786, DateTimeKind.Local).AddTicks(103),
+                            Datum = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8530),
                             Iznos = 90.0,
                             KorisnikId = 2,
                             Status = "Pending"
@@ -196,7 +199,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         {
                             NarudzbaId = 2,
                             BrojNarudzbe = "#2",
-                            Datum = new DateTime(2023, 11, 3, 18, 23, 47, 786, DateTimeKind.Local).AddTicks(110),
+                            Datum = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8542),
                             Iznos = 60.0,
                             KorisnikId = 2,
                             Status = "Pending"
@@ -237,7 +240,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             NovostId = 1,
-                            DatumObjave = new DateTime(2023, 11, 3, 18, 23, 47, 786, DateTimeKind.Local).AddTicks(33),
+                            DatumObjave = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8348),
                             KorisnikId = 1,
                             Naslov = "Test naslov",
                             Sadrzaj = "Test sadrzaj"
@@ -277,7 +280,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             OmiljeniProizvodId = 1,
-                            DatumDodavanja = new DateTime(2023, 11, 3, 18, 23, 47, 786, DateTimeKind.Local).AddTicks(64),
+                            DatumDodavanja = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8369),
                             KorisnikId = 2,
                             ProizvodId = 1
                         });
@@ -459,7 +462,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             RecenzijaId = 1,
-                            Datum = new DateTime(2023, 11, 3, 18, 23, 47, 785, DateTimeKind.Local).AddTicks(9888),
+                            Datum = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8246),
                             KorisnikId = 2,
                             ProizvodId = 1,
                             Sadrzaj = "Test recenzija"
@@ -616,7 +619,7 @@ namespace DermatoloskaOrdinacija.Services.Migrations
                         new
                         {
                             TerminId = 1,
-                            Datum = new DateTime(2023, 11, 3, 18, 23, 47, 786, DateTimeKind.Local).AddTicks(3),
+                            Datum = new DateTime(2023, 11, 5, 12, 56, 49, 120, DateTimeKind.Local).AddTicks(8326),
                             KorisnikIdDoktor = 1,
                             KorisnikIdPacijent = 2
                         });

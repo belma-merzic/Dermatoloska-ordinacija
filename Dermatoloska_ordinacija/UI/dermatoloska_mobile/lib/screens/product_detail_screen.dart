@@ -62,7 +62,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       "proizvodId": widget.product.proizvodID,
     });
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Review posted")),
+      SnackBar(content: Text("Review posted"),
+      backgroundColor: Colors.green,),
     );
     setState(() {
       _reviewController.clear();
@@ -127,7 +128,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           "proizvodId": widget.product.proizvodID,
                         });
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("You liked this product")),
+                          SnackBar(content: Text("You liked this product"),
+                          backgroundColor: Colors.green,
+                          ),
                         );
                       }
                     },

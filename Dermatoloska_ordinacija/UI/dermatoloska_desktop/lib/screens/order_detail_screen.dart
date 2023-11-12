@@ -119,15 +119,30 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           FormBuilderTextField(
             decoration: InputDecoration(labelText: "Status"),
             name: 'status',
+            onChanged: (value) {
+             final currentValue = _initialValue['status'];
+             print(currentValue);
+            },
             validator: (value) {
-              if (value != null &&
-                  (value.isEmpty ||
-                      (value != "Cancelled" &&
-                          value != "Completed" &&
-                          value != "Pending"))) {
-                return "Valid values are Cancelled, Completed, or Pending";
-              }
-              return null;
+                if (value != null && value.isNotEmpty) {
+                  final currentValue = _initialValue['status'];
+                  final newValue = value;
+
+                  final allowedTransitions = {
+        'Pending': ['Completed', 'Cancelled'],
+        'Cancelled': ['Pending'],
+        'Completed': ['Pending'],
+      };
+
+      if (currentValue != newValue) {
+        if (allowedTransitions.containsKey(currentValue) &&
+            allowedTransitions[currentValue] != null &&
+            !allowedTransitions[currentValue]!.contains(newValue)) {
+          return "Invalid status transition (Allowed transitions: Pending -> Completed/Cancelled; Cancelled -> Pending; Completed -> Pending)";
+        }
+      }
+    }
+    return null;
             },
           ),
           SizedBox(height: 10),
@@ -258,4 +273,21 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       return 'N/A';
     }
   }
+  
+  bool isValidStatusTransition(String? currentStatus, String? newStatus) {
+  if (currentStatus == newStatus) {
+    return true;
+  }
+
+  switch (currentStatus) {
+    case "Pending":
+      return newStatus == "Completed" || newStatus == "Cancelled";
+    case "Cancelled":
+      return newStatus == "Pending";
+    case "Completed":
+      return newStatus == "Pending";
+    default:
+      throw Exception("Invalid status transition");
+  }
+}
 }

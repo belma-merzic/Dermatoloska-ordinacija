@@ -224,13 +224,13 @@ Widget _buildContent() {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("Zatvori"),
+            child: Text("Close"),
           ),
         ],
       );
     });
   },
-  child: Text("Detalji"),
+  child: Text("Details"),
 ),
 
 
@@ -301,6 +301,8 @@ _fetchStavkeNarudzbe(Narudzba narudzba) async {
   if (_selectedReportType == 'Narudzbe' && _narudzbe != null) {
     return pw.Column(
       children: _narudzbe!.map((narudzba) {
+        print("printanje broja narudzbe");
+        print(narudzba.brojNarudzbe);
         return pw.Container(
           padding: pw.EdgeInsets.symmetric(vertical: 8.0),
           child: pw.Row(
@@ -372,7 +374,8 @@ Future<pw.Document> _generatePDFReport() async {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
+        child: SingleChildScrollView(child: 
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16.0),
@@ -432,6 +435,7 @@ Future<pw.Document> _generatePDFReport() async {
             ),
           ],
         ),
+      ),
       ),
     );
   }
