@@ -48,7 +48,6 @@ Future<void> _fetchNarudzbe() async {
       ),
       body: Column(
         children: [
-          //_buildSearch(),
           _buildDataListView(),
         ],
       ),

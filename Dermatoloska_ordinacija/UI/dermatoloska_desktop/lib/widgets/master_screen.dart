@@ -2,7 +2,10 @@ import 'package:dermatoloska_desktop/screens/product_list_screen.dart';
 import 'package:dermatoloska_desktop/screens/home_page_screen.dart';
 import 'package:dermatoloska_desktop/screens/termin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../main.dart';
+import '../providers/korisnik_provider.dart';
 import '../screens/izvjestaj_screen.dart';
 import '../screens/orders_screen.dart';
 
@@ -94,6 +97,19 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
                 );
               },
             ),
+                ListTile(
+        title: Text('Log Out'),
+        onTap: () {
+          final korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
+          korisniciProvider.logout();
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) =>  LoginPage()),
+            (route) => false,
+          );
+        },
+      ),
           ],
         ),
       ),

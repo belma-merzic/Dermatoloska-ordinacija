@@ -36,11 +36,6 @@ class _CartScreenState extends State<CartScreen> {
     _cartProvider = context.watch<CartProvider>();
     _orderProvider = context.watch<OrderProvider>();
     _korisniciProvider = context.watch<KorisniciProvider>();
-
- /*for (var item in _cartProvider.cart.items) {
-      total += double.parse(item.count.toString()) *
-          double.parse(item.product.cijena.toString());
-    }*/
   }
 
 
@@ -97,13 +92,13 @@ Widget _buildProductCard(CartItem item) {
         height: 100,
         child: imageFromBase64String(item.product.slika!),
       ),
-      SizedBox(width: 10), // Add some spacing between the image and buttons
+      SizedBox(width: 10), 
       Expanded(
         child: ListTile(
           title: Text(item.product.naziv ?? ""),
           subtitle: Text(item.product.cijena.toString()),
           trailing: Row(
-            mainAxisSize: MainAxisSize.min, // Make sure buttons are not stretched
+            mainAxisSize: MainAxisSize.min, 
             children: [
               IconButton(
                 icon: Icon(Icons.remove),
@@ -180,7 +175,6 @@ Widget _buildBuyButton() {
       foregroundColor: Colors.black,
     ),
     onPressed: _cartProvider.cart.items.isEmpty ? null : () async {
-      //total = 0;
       List<Map<String, dynamic>> items = [];
 
       _cartProvider.cart.items.forEach((item) {
@@ -200,10 +194,7 @@ Widget _buildBuyButton() {
       };
 
       var response = await _orderProvider.insert(order);
-
-      _cartProvider.cart.items.clear();
-
-      total = 0.00;
+      
       setState(() {});
 
       Navigator.of(context).push(

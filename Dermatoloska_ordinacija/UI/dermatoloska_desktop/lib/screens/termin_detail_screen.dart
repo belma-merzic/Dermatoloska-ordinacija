@@ -71,9 +71,6 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
         result = data;
         if (result?.result.isNotEmpty == true) {
           _selectedPatient = _modifiedPacijentId ?? result!.result[0].korisnikId;
-
-          print("SELEKTOVANI");
-          print(_selectedPatient);
         } else {
           _selectedPatient = null;
         }

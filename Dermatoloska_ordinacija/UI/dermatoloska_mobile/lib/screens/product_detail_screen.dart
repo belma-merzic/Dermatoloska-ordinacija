@@ -28,7 +28,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     _korisniciProvider = KorisniciProvider();
     _dojamProvider = DojamProvider();
     _recenzijaProvider = RecenzijaProvider();
-    //fetchRecenzije(widget.product.proizvodID!);
   }
 
   Future<int> getPatientId() async {
@@ -186,7 +185,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
               SizedBox(height: 30),
               Container(
-                width: double.infinity, // Ensures TextField has a finite width
+                width: double.infinity, 
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8.0),

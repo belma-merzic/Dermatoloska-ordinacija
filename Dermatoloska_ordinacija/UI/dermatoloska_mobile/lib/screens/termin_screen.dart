@@ -56,7 +56,7 @@ class _TerminiScreenState extends State<TerminiScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                _navigateToTerminDetailScreen(null); // Passing null as patient ID
+                _navigateToTerminDetailScreen(null); 
               },
               child: Text('Add Appointment'),
             ),

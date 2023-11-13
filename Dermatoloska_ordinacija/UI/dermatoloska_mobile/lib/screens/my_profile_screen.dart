@@ -43,7 +43,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   String? _karton;
   int? _zdravstveniKartonId; 
 
-    File? _image; // Store the selected image file
+    File? _image; 
   String? _base64Image;
 
 
@@ -68,11 +68,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }
 
   Future<void> _fetchZdravstveniKarton() async {
-    setState(() {           ////////////////////////////////////////////////////////////////////////////////
+    setState(() {           
       _isLoading = true;
     });
 
-    final pacijentId = await getPatientId();  ////////////////////////////////////////////////////////////////////////////////
+    final pacijentId = await getPatientId();  
 
     try {
       var result = await _zdravstveniKartonProvider.get(filter: {
@@ -84,7 +84,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           _zdravstveniKartonId = result.result[0].zdravstveniKartonId; 
           _karton = result.result[0].sadrzaj;
 
-          print(_karton);
           _isLoading = false;
         });
       } else {
@@ -143,28 +142,22 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 20),
-                  /////////////////////////////////////////////////////////////////////
                  
 GestureDetector(
-// Inside your GestureDetector for image selection
 onTap: () async {
   final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
    final image = File(pickedImage!.path);
 
-    // Convert the image file to bytes (Uint8List)
     final imageBytes = await image.readAsBytes();
 
-    // Convert the bytes to a base64-encoded string
     final base64String = base64Encode(imageBytes);
 
-    // Update korisnikData.slika with the base64String
     setState(() {
       korisnikData?.slika = base64String;
     });
 },
 
-// Inside your GestureDetector for displaying the current profile picture
 child: Container(
   width: 150,
   height: 150,
@@ -176,15 +169,15 @@ child: Container(
     ),
   ),
   child: ClipOval(
-    child: (korisnikData!.slika != null && korisnikData.slika!.isNotEmpty)//korisnikData!.slika != null 
+    child: (korisnikData!.slika != null && korisnikData.slika!.isNotEmpty)
       ? Image.memory(
-          base64Decode(korisnikData.slika!), // Display the current profile picture
+          base64Decode(korisnikData.slika!), 
           width: 150,
           height: 150,
           fit: BoxFit.cover,
         )
         : Image.asset(
-            "assets/images/no-image.jpg", // Provide a local placeholder image
+            "assets/images/no-image.jpg", 
             width: 150,
             height: 150,
             fit: BoxFit.cover,
@@ -196,7 +189,7 @@ child: Container(
 
 
 
-                  //////////////////////////////////////////////////////////////////////
+                  
                   SizedBox(height: 20),
                   FormBuilderTextField(
                       name: 'ime', 
@@ -219,7 +212,7 @@ child: Container(
                   FormBuilderTextField(
                       name: 'username',
                       initialValue: korisnikData?.username ?? '',
-                      enabled: false, // Read-only
+                      enabled: false, 
                       decoration: InputDecoration(
                         labelText: 'Username',
                         prefixIcon: Icon(Icons.account_circle),
@@ -237,7 +230,7 @@ child: Container(
                   FormBuilderTextField(
                       name: 'telefon',
                       initialValue: korisnikData?.telefon ?? '',
-                      enabled: true, // Editable
+                      enabled: true, 
                       decoration: InputDecoration(
                         labelText: 'Phone',
                         prefixIcon: Icon(Icons.phone),
@@ -246,7 +239,7 @@ child: Container(
                   FormBuilderTextField(
                       name: 'adresa',
                       initialValue: korisnikData?.adresa ?? '',
-                      enabled: true, // Editable
+                      enabled: true, 
                       decoration: InputDecoration(
                         labelText: 'Address',
                         prefixIcon: Icon(Icons.location_on),
@@ -311,11 +304,8 @@ child: Container(
                     }
 
                      if (korisnikData!.slika != null) {
-          // If korisnikData.slika is not null, add it to the request
           request['slika'] = korisnikData.slika;
         }
-
-        print(request);
 
                    try {
                      await _korisniciProvider.update(korisnikData!.korisnikId!, request);
@@ -409,9 +399,6 @@ child: Container(
   onPressed: () async {
     final pdf = await generatePDFReport();
     await _printPDFReport(pdf);
-    // Add code to save or display the PDF here.
-    // You can use a package like 'printing' to print the PDF.
-    // For example, you can display the PDF using 'open_file' package.
   },
   child: Text('Print'),
 )

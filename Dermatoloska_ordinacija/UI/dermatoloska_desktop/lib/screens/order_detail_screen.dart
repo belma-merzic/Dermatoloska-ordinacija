@@ -166,7 +166,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           fontWeight: FontWeight.normal,
           ),
 )       ,
-         // Prikazivanje stavki narudžbe
+         
     if (stavkeNarudzbe.isNotEmpty)
     ...stavkeNarudzbe.asMap().entries.map((entry) {
     final index = entry.key;
@@ -180,12 +180,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           readOnly: true,
           initialValue: stavka.kolicina.toString(),
         ),
-        /* FormBuilderTextField(
-          decoration: InputDecoration(labelText: 'Proizvod ID'),
-          name: 'proizvodId',
-          readOnly: true,
-          initialValue: stavka.proizvodId.toString(),
-        ), */
         FutureBuilder<String>(
           future: _getProductName(stavka.proizvodId),
           builder: (context, snapshot) {

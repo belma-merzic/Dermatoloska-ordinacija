@@ -14,7 +14,6 @@ Future<List<StavkaNarudzbe>> getStavkeNarudzbeByNarudzbaId(int narudzbaId) async
   try {
     var filter = {"NarudzbaId": narudzbaId}; // Create a filter object based on NarudzbaId
     var result = await get(filter: filter);
-    print("STAVKEEE NARUDZBEE");
     print(result.result);
     return result.result;
 

@@ -225,7 +225,6 @@ void _saveNewTermin() async {
     );
 
     try {
-      // Provjerite zauzetost datuma i vremena prije nego što se pokuša dodati novi termin
       if (_isDateTimeOccupied(_modifiedDatum)) {
         showDialog(
           context: context,

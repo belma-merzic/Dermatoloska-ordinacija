@@ -48,7 +48,7 @@ class CartProvider with ChangeNotifier {
   calculateTotal() {
     total = 0;
     for (var item in cart.items) {
-      total += item.count * (item.product.cijena ?? 0.0); // Use 0.0 as the default value if cijena is null
+      total += item.count * (item.product.cijena ?? 0.0); 
 
     }
   }

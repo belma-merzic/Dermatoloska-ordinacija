@@ -155,7 +155,7 @@ class LoginPage extends StatelessWidget {
                   try {
                     await _productProvider.get();
   
-                    Navigator.of(context).push( //pushReplacement -> da se ne moze vratiti na login page
+                    Navigator.of(context).push( 
                     MaterialPageRoute(builder: (context) => const ProductListScreen()
                     ),
                     );
@@ -352,7 +352,6 @@ class SignUpPage extends StatelessWidget {
                           ),
                         );
                 } else {
-                  // try {
                   Map order = {
                     "ime": _firstnameController.text,
                     "prezime": _lastnameController.text,

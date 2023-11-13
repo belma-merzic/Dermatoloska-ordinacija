@@ -16,7 +16,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   List<Novost> _novosti = [];
   bool isLoading = true;
   TextEditingController _naslovController = TextEditingController();
-  bool _isSortAscending = true; // Initial sort order
+  bool _isSortAscending = true; 
 
   @override
   void initState() {

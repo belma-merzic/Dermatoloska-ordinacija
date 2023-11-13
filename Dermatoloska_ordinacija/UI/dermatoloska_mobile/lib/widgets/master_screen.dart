@@ -126,7 +126,7 @@ class _MasterScreenWidgetState extends State<MasterScreenWidget> {
 
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const Welcome()),
+            MaterialPageRoute(builder: (context) => LoginPage()),
             (route) => false,
           );
         },

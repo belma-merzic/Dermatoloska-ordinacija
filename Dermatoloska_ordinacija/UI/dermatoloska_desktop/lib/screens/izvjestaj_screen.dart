@@ -166,7 +166,6 @@ Widget _buildContent() {
       itemCount: _narudzbe!.length,
       itemBuilder: (context, index) {
         var narudzba = _narudzbe![index];
-        //var data =  _fetchStavkeNarudzbe(narudzba);
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: MouseRegion(
@@ -199,11 +198,10 @@ Widget _buildContent() {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (stavkeNarudzbe != null) 
-              for (var stavka in stavkeNarudzbe!) // Prolazite kroz sve stavke narudžbe
+              for (var stavka in stavkeNarudzbe!) 
                 Column(
                   children: [
                     Text("Quantity: ${stavka.kolicina.toString()}"),
-                    //Text("Product ID: ${stavka.proizvodId.toString()}"),
                     FutureBuilder<String>(
                       future: getProductName(stavka.proizvodId),
                       builder: (context, snapshot) {
@@ -214,7 +212,7 @@ Widget _buildContent() {
                         }
                       },
                     ),
-                    Divider(), // razdvajač između stavki
+                    Divider(), 
                   ],
                 ),
           ],
@@ -252,7 +250,6 @@ Widget _buildContent() {
 
     try {
       var product = await productProvider.getById(proizvodId);
-      print(product.naziv);
       return product.naziv ?? 'N/A';
     } catch (e) {
       return 'N/A';
@@ -260,8 +257,6 @@ Widget _buildContent() {
   }
 
 _fetchStavkeNarudzbe(Narudzba narudzba) async {
-  print("NARUDZBA KOJA JE POSLANA U FUNKCIJU");
-  print(narudzba.brojNarudzbe);
   if (narudzba == null) {
     setState(() {
       isLoading = false;
@@ -301,8 +296,6 @@ _fetchStavkeNarudzbe(Narudzba narudzba) async {
   if (_selectedReportType == 'Narudzbe' && _narudzbe != null) {
     return pw.Column(
       children: _narudzbe!.map((narudzba) {
-        print("printanje broja narudzbe");
-        print(narudzba.brojNarudzbe);
         return pw.Container(
           padding: pw.EdgeInsets.symmetric(vertical: 8.0),
           child: pw.Row(
@@ -367,7 +360,6 @@ Future<pw.Document> _generatePDFReport() async {
 
   @override
   Widget build(BuildContext context) {
-    print("usao u build");
     return Scaffold(
       appBar: AppBar(
         title: Text('Reports'),

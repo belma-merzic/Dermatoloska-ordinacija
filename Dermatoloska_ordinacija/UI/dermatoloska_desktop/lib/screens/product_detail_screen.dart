@@ -56,9 +56,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Future initForm() async{
     VrsteProizvodaResult = await _vrsteProizvodaProvider.get();
-    print(VrsteProizvodaResult);
-
-    //kada se sve ucitalo u setState
+   
     setState(() {
       isLoading = false;
     });
@@ -77,16 +75,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             Padding(padding: EdgeInsets.all(10),
             child: ElevatedButton(onPressed: () async {
-               //final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
-    /*if (isPriceValid == null || !isPriceValid) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please fix the price before saving.'),backgroundColor: Colors.red,),);
-      return;
-    }*/
+     
        final isNameValid = _formKey.currentState!.fields['naziv']?.validate();
     final isCodeValid = _formKey.currentState!.fields['sifra']?.validate();
     final isPriceValid = _formKey.currentState!.fields['cijena']?.validate();
     final isTypeValid = _formKey.currentState!.fields['vrstaId']?.validate();
-    //final isImageValid = _formKey.currentState!.fields['slika']?.validate();
 
     if (isNameValid == null || !isNameValid ||
         isCodeValid == null || !isCodeValid ||
@@ -202,7 +195,7 @@ Expanded(child: FormBuilderDropdown<String>(
     if (value == null || value.isEmpty) {
       return 'Product Type is required';
     }
-    return null; // Povratna null vrijednost označava da nema greške
+    return null; 
   },
   items: VrsteProizvodaResult?.result
     .map((item) => DropdownMenuItem(
@@ -266,7 +259,6 @@ Expanded(
     _image = File(result.files.single.path!);
     _base64Image = base64Encode(_image!.readAsBytesSync());
   } else {
-    // Korisnik nije odabrao sliku, postavite zadani URL slike
     _base64Image = base64Encode(File('assets/no-image.jpg').readAsBytesSync());
   }
 }

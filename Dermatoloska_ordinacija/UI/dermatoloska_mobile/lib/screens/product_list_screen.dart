@@ -46,8 +46,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
       _favoritesProvider = Provider.of<FavoritesProvider>(context, listen: false);
       _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
       _recommendResultProvider = context.read<RecommendResultProvider>();
-
-     // _recommendResultProvider.trainData();
   }
 
   Future<void> _fetchProducts() async {

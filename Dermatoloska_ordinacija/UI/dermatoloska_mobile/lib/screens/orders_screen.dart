@@ -40,13 +40,11 @@ Future<void> _fetchNarudzbe() async {
 
 
     final pacijentId = await getPatientId();
-    print(pacijentId.toString());
 
     try {
       var result = await _ordersProvider.get(filter: {
         'korisnikId' : pacijentId
       });
-      print(result.result);
       setState(() {
         _narudzba = result.result;
         isLoading = false;

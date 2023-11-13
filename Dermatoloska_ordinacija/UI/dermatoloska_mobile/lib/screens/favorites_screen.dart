@@ -86,7 +86,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 return Text('Product not found');
               } else {
                 final product = snapshot.data!;
-                return imageFromBase64String(product.slika!); // Assuming slika is the base64-encoded image property
+                return imageFromBase64String(product.slika!); 
               }
             },
           ),

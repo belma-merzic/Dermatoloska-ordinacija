@@ -148,25 +148,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: MouseRegion(
-              cursor: SystemMouseCursors.click, // Change cursor to hand when hovering
+              cursor: SystemMouseCursors.click, 
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: ListTile(
-                  /*onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => NovostDetailScreen(novost: novost),
-                      ),
-                    );
-                  },*/
                   title: Text(novost.naslov ?? ''),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //Text(novost.sadrzaj ?? ''),
                       Text(_truncateString(novost.sadrzaj) ?? ''),
                       SizedBox(height: 8),
                       Text(

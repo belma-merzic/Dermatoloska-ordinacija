@@ -102,8 +102,8 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
           ),
         ),
             Container(
-          width: 400, // Set the width to 80% of the screen width
-          height: 250, // Set the height to your desired value for a square shape
+          width: 400, 
+          height: 250, 
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.0),
@@ -114,7 +114,7 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
               child: FormBuilderTextField(
                 name: 'sadrzaj',
                 readOnly: true,
-                maxLines: null, // Allow unlimited vertical expansion
+                maxLines: null, 
               ),
             ),
           ),

@@ -15,11 +15,10 @@ import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-  //da bi flutter mogao naci ProductProvider dodali smo instancu u main.dart
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
-  tz.setLocalLocation(tz.getLocation('Europe/Belgrade')); // Replace 'Europe/Belgrade' with your desired time zone.
+  tz.setLocalLocation(tz.getLocation('Europe/Belgrade')); 
   runApp(MyMaterialApp());
 }
 

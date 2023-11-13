@@ -5,7 +5,6 @@ import 'package:dermatoloska_mobile/models/transakcija.dart';
 import 'package:dermatoloska_mobile/providers/korisnik_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +15,7 @@ import '../providers/transakcija_provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../utils/util.dart';
+import 'cart_screen.dart';
 
 
 class PaymentScreen extends StatefulWidget {
@@ -32,12 +32,11 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  late Future<double> total;
   late List<Map<String, dynamic>> itemList = [];
   late ProductProvider _productProvider;
   late TransakcijaProvider _transakcijaProvider;
    late CartProvider _cartProvider;
-   late KorisniciProvider _korisniciProvider;
+
 
 
   @override
@@ -46,7 +45,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
     _productProvider = Provider.of<ProductProvider>(context, listen: false);
     _transakcijaProvider = Provider.of<TransakcijaProvider>(context, listen: false);
     _cartProvider = Provider.of<CartProvider>(context, listen: false);
-    _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
 
     total = calculateTotalAmount(widget.items);
     _navigateToPaypalCheckout();
@@ -54,7 +52,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
 void _navigateToPaypalCheckout() async {
-  double totalAmount = await total; // Pričekajte izračun ukupnog iznosa
+  double totalAmount = await total; 
   await buildItemList(widget.items);
 
   Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -67,7 +65,7 @@ void _navigateToPaypalCheckout() async {
       transactions: [
         {
           "amount": {
-            "total": totalAmount.toStringAsFixed(2), // Ispravite ovdje da koristite totalAmount
+            "total": totalAmount.toStringAsFixed(2), 
             "currency": "USD",
             "details": {
               "subtotal": totalAmount.toStringAsFixed(2),
@@ -84,7 +82,6 @@ void _navigateToPaypalCheckout() async {
       ],
       note: "Contact us for any questions on your order.",
       onSuccess: (Map params) async {
-        print("BELAMMAMAMAMMAAMMAMMA-------------------------");
         print("onSuccess: $params");
       if (params['data']['state'] == 'approved') {
 
@@ -97,13 +94,12 @@ void _navigateToPaypalCheckout() async {
         );
   await _transakcijaProvider.insert(request);
 
-print(_cartProvider.cart.items);
   _cartProvider.cart.items.clear();
+      total = 0.00;
 
-          // Show a success message to the user
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Your order has been successfully processed.'),
+              content: Text('Order has been processed. Please refresh your cart screen !'),
               backgroundColor: Colors.green,
             ),
           );
@@ -137,38 +133,36 @@ print(_cartProvider.cart.items);
     );
   }
 
-  Future<double> calculateTotalAmount(List<Map<String, dynamic>> items) async {
-    double total = 0;
+double calculateTotalAmount(List<Map<String, dynamic>> items) {
+  Future<void> fetchAndCalculate() async {
     for (var item in items) {
       int proizvodID = item["proizvodID"];
       int quantity = item["kolicina"];
 
-      // Fetch the product details using GetById
       final product = await _productProvider.getById(proizvodID);
 
       if (product != null) {
-        // Use the fetched product's price for calculation
-        double price = product.cijena!;
+        double price = product.cijena ?? 0.0;
         total += price * quantity;
       }
     }
-    return total;
   }
+
+  fetchAndCalculate().then((_) => total);
+
+  return total;
+}
+
 
   Future<void> buildItemList(
     List<Map<String, dynamic>> items,
   ) async {
     itemList.clear();
-    print("LALALALALLALALA");
     print(items.length.toString());
     double totalAmount = 0;
 
     for (var i = 0; i < items.length; i++) {
-      print("555555555555555555555555");
-      print(widget.items);
-      print(items.length);
       if (i < items.length) {
-        print("USLOOOO OVDJE");
         int proizvodID = items[i]["proizvodID"];
         final product = await _productProvider.getById(proizvodID);
         if (product != null) {
@@ -182,11 +176,9 @@ print(_cartProvider.cart.items);
             "price": price.toStringAsFixed(2),
             "currency": "USD",
           });
-          print("LISTAAAAAAAAAAAAAAAAAAAAAA");
           print(itemList);
         }
       } else {
-        print("BEBEBEBEBEB");
       }
     }
 

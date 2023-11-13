@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:dermatoloska_desktop/models/recommendResult.dart';
 import 'package:dermatoloska_desktop/providers/base_provider.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:dermatoloska_desktop/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 

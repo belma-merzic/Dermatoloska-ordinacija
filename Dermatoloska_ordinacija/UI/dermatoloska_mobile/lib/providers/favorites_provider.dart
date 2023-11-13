@@ -9,10 +9,10 @@ import 'package:dermatoloska_mobile/utils/util.dart';
 class FavoritesProvider extends BaseProvider<Favorites> { 
 
    String? _mainBaseUrl;
-   String _endpoint = "OmiljeniProizvodi";///////////////////////////////////////////////////////////////////
+   String _endpoint = "OmiljeniProizvodi";
 
   FavoritesProvider() : super("OmiljeniProizvodi"){
-    _mainBaseUrl = const String.fromEnvironment("mainBaseUrl", defaultValue: "http://10.0.2.2:7005/"); /////////////////////////////////////////////////////////////////////
+    _mainBaseUrl = const String.fromEnvironment("mainBaseUrl", defaultValue: "http://10.0.2.2:7005/"); 
   }
 
 
@@ -26,15 +26,12 @@ class FavoritesProvider extends BaseProvider<Favorites> {
     return Favorites.fromJson(data);
   }
 
-///////////////////////////////////////////////////////////////////
-
     Future<dynamic> sendRabbit(dynamic object) async{
      var url = "$_mainBaseUrl$_endpoint";
      
     
     var uri = Uri.parse(url);
     var jsonRequest = jsonEncode(object);
-    //var headers = {"Content-Type": "application/json"};
     var headers = createHeaders();
 
 
@@ -48,5 +45,4 @@ class FavoritesProvider extends BaseProvider<Favorites> {
       throw  Exception("Unknown error");
     }
   }
-///////////////////////////////////////////////////////////////////
 }
