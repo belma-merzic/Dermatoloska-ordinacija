@@ -111,11 +111,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
           SizedBox(width: 8),
           ElevatedButton(
             onPressed: () async {
+              var refresh = await
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => NovostDetailScreen(novost: null),
-                ),
-              );
+                ));
+
+                if(refresh == 'reload'){
+                  _fetchNovosti();
+                }
             },
             child: Text("Add"),
           ),
@@ -156,12 +160,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: ListTile(
-                  onTap: () {
+                  onTap: () async {
+                    var refresh = await
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => NovostDetailScreen(novost: novost),
                       ),
                     );
+                    if(refresh == 'reload'){
+                  _fetchNovosti();
+                }
                   },
                   title: Text(novost.naslov ?? ''),
                   subtitle: Column(

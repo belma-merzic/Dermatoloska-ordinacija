@@ -197,15 +197,14 @@ Widget _buildBuyButton() {
       
       setState(() {});
 
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => PaymentScreen(
             items: items,
             korisnikId: patientId,
             narudzbaId: response.narudzbaId,
             iznos:response.iznos
-          ),
-        ),
+          )),
       );
     },
   );

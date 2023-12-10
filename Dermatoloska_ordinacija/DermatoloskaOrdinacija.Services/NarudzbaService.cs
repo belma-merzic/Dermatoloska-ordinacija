@@ -79,8 +79,6 @@ namespace DermatoloskaOrdinacija.Services
                     return newStatus == "Completed" || newStatus == "Cancelled";
                 case "Cancelled":
                     return newStatus == "Pending";
-                case "Completed":
-                    return newStatus == "Pending";
                 default:
                     throw new UserException("Invalid status transition");
             }

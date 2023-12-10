@@ -46,13 +46,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
     _transakcijaProvider = Provider.of<TransakcijaProvider>(context, listen: false);
     _cartProvider = Provider.of<CartProvider>(context, listen: false);
 
-    total = calculateTotalAmount(widget.items);
+   // total = calculateTotalAmount(widget.items);
     _navigateToPaypalCheckout();
 
   }
 
 void _navigateToPaypalCheckout() async {
-  double totalAmount = await total; 
+  double totalAmount = await calculateTotalAmount(widget.items); 
   await buildItemList(widget.items);
 
   Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -99,10 +99,11 @@ void _navigateToPaypalCheckout() async {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Order has been processed. Please refresh your cart screen !'),
+              content: Text('Order has been processed.'),
               backgroundColor: Colors.green,
             ),
           );
+         // Navigator.pop(context, 'reload');
       }else{
         print('Payment was not successful');
       }
@@ -133,8 +134,9 @@ void _navigateToPaypalCheckout() async {
     );
   }
 
-double calculateTotalAmount(List<Map<String, dynamic>> items) {
-  Future<void> fetchAndCalculate() async {
+Future<double> calculateTotalAmount(List<Map<String, dynamic>> items) async {
+  double total = 0.0;
+
     for (var item in items) {
       int proizvodID = item["proizvodID"];
       int quantity = item["kolicina"];
@@ -146,20 +148,16 @@ double calculateTotalAmount(List<Map<String, dynamic>> items) {
         total += price * quantity;
       }
     }
-  }
-
-  fetchAndCalculate().then((_) => total);
 
   return total;
 }
 
 
-  Future<void> buildItemList(
-    List<Map<String, dynamic>> items,
-  ) async {
+  Future<void> buildItemList(List<Map<String, dynamic>> items) async {
     itemList.clear();
     print(items.length.toString());
-    double totalAmount = 0;
+
+    double totalAmount = await calculateTotalAmount(items);
 
     for (var i = 0; i < items.length; i++) {
       if (i < items.length) {

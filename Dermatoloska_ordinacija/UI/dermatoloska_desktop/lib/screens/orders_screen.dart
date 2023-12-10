@@ -87,12 +87,15 @@ Future<void> _fetchNarudzbe() async {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: ListTile(
-                  onTap: () {
+                  onTap: () async{
+                    var refresh = await
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => OrderDetailScreen(narudzba: narudzba),
-                      ),
-                    );
+                      ));
+                      if(refresh == 'reload'){
+                        _fetchNarudzbe();
+                      }
                   },
                   title: Text(narudzba.brojNarudzbe ?? ''),
                   subtitle: Column(

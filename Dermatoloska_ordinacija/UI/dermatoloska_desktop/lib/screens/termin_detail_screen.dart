@@ -219,7 +219,7 @@ void _saveModifiedTermin() async {
       await TerminiProvider().update(widget.termin!.terminId!, widget.termin!);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Appointment "${widget.termin?.terminId}" successfully updated.'),
+          content: Text('Appointment successfully updated.'),
           backgroundColor: Colors.green,
         ),
       );
@@ -275,7 +275,7 @@ void _saveNewTermin() async {
       final insertedTermin = await TerminiProvider().insert(newTermin);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Appointment "${insertedTermin.terminId}" successfully added.'),
+          content: Text('Appointment successfully added.'),
           backgroundColor: Colors.green,
         ),
       );

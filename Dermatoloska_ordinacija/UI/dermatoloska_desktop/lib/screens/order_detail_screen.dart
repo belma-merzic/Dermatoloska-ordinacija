@@ -131,14 +131,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   final allowedTransitions = {
         'Pending': ['Completed', 'Cancelled'],
         'Cancelled': ['Pending'],
-        'Completed': ['Pending'],
       };
 
       if (currentValue != newValue) {
         if (allowedTransitions.containsKey(currentValue) &&
             allowedTransitions[currentValue] != null &&
             !allowedTransitions[currentValue]!.contains(newValue)) {
-          return "Invalid status transition (Allowed transitions: Pending -> Completed/Cancelled; Cancelled -> Pending; Completed -> Pending)";
+          return "Invalid status transition (Allowed transitions: Pending -> Completed/Cancelled; Cancelled -> Pending)";
         }
       }
     }
@@ -216,9 +215,27 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                     try {
                       if (widget.narudzba == null) {
                         await _ordersProvider.insert(request);
-                      } else {
-                        print(request);
-                        await _ordersProvider.update(
+                      } 
+                      else {
+                        var currentStatus = _initialValue['status'];
+                        var newStatus = request['status'];
+
+                        if(currentStatus == 'Completed'){
+                             showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: Text("Error"),
+              content: Text("Cannot transition from 'Completed' status."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("OK"),
+                ),
+              ],
+            ),
+          );
+                        }else{
+                          await _ordersProvider.update(
                           widget.narudzba!.narudzbaId!,
                           request,
                         );
@@ -226,8 +243,10 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                           SnackBar(
                             content: Text('Order status successfully updated.'),
                             backgroundColor: Colors.green,
-                          ),
-                        );
+                          ));
+                          Navigator.pop(context, 'reload');
+                      //}
+                      }
                       }
                     } on Exception catch (e) {
                       showDialog(
@@ -267,21 +286,4 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       return 'N/A';
     }
   }
-  
-  bool isValidStatusTransition(String? currentStatus, String? newStatus) {
-  if (currentStatus == newStatus) {
-    return true;
-  }
-
-  switch (currentStatus) {
-    case "Pending":
-      return newStatus == "Completed" || newStatus == "Cancelled";
-    case "Cancelled":
-      return newStatus == "Pending";
-    case "Completed":
-      return newStatus == "Pending";
-    default:
-      throw Exception("Invalid status transition");
-  }
-}
 }

@@ -77,16 +77,19 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     }
   }
 
-  bool _isDateTimeOccupied(DateTime dateTime) {
-    if (_termini != null) {
-      for (var termin in _termini!) {
-        if (termin.datum == dateTime) {
-          return true;
-        }
+bool _isDateTimeOccupied(DateTime dateTime) {
+  if (_termini != null) {
+    for (var termin in _termini!) {
+      if (dateTime.isBefore(termin.datum!.add(Duration(minutes: 30))) &&
+          termin.datum!.isBefore(dateTime.add(Duration(minutes: 30)))) {
+        return true;
       }
     }
-    return false;
   }
+  return false;
+}
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -169,13 +169,13 @@ class _TerminiScreenState extends State<TerminiScreen> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Appointment "${termin.terminId}" deleted successfully.'),
+          content: Text('Appointment deleted successfully.'),
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Failed to delete appointment "${termin.terminId}".'),
+          content: Text('Failed to delete appointment.'),
         ),
       );
     }

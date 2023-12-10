@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dermatoloska_desktop/models/recommendResult.dart';
 import 'package:dermatoloska_desktop/providers/product_provider.dart';
 import 'package:dermatoloska_desktop/providers/recommend_result_provider.dart';
@@ -10,6 +13,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../models/product.dart';
 import '../models/search_result.dart';
 import 'package:provider/provider.dart';
+
 
 
 class ProductListScreen extends StatefulWidget {
@@ -147,11 +151,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
             ElevatedButton(
               onPressed: () async {
+                var refresh = await 
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => ProductDetailScreen(product: null,),
-                  ),
-                );
+                  ));
+                  
+                  if(refresh == 'reload'){
+                    _fetchProducts();
+                  }
               },
               child: Text("Add"),
             ),
@@ -212,29 +220,31 @@ class _ProductListScreenState extends State<ProductListScreen> {
         ],
         rows: result!.result.map(
           (Product e) => DataRow(
-            onSelectChanged: (selected) {
-              if (selected == true) {
+            onSelectChanged: (selected) async {
+              //if (selected == true) {
+                var refresh = await
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => ProductDetailScreen(
-                      product: e,
-                    ),
-                  ),
-                );
-              }
+                    builder: (context) => ProductDetailScreen(product: e),
+                  ));
+
+                  if(refresh == 'reload'){
+                    _fetchProducts();
+                  }
+              //}
             },
             cells: [
               DataCell(Text(e.sifra ?? "")),
               DataCell(Text(e.naziv ?? "")),
               DataCell(Text(formatNumber(e.cijena))),
               DataCell(
-                e.slika != ""
+                e.slika != "" || e.slika == null
                     ? Container(
                         width: 100,
                         height: 100,
                         child: imageFromBase64String(e.slika!),
                       )
-                    : Text(""),
+                    : imageFromBase64String(base64Encode(File('assets/images/no-image.jpg').readAsBytesSync())),//Text(""),
               ),
               DataCell(
                 IconButton(

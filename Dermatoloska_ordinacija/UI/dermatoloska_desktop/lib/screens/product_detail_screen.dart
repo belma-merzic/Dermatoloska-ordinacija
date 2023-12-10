@@ -109,21 +109,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     await _productProvider.insert(request);
                      ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Product successfully added.  Please refresh Product page !'),
+                      content: Text('Product successfully added.'),
                       backgroundColor: Colors.green,
                      ),
                     );
                     _formKey.currentState?.reset();
+                    Navigator.pop(context, 'reload');
+                    
                 } else{
                   print(request);
                   await _productProvider.update(widget.product!.proizvodID!, request);
                    ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Product successfully updated. Please refresh Product page !'),
+                      content: Text('Product successfully updated'),
                       backgroundColor: Colors.green,
                      ),
                     );
-                    Navigator.of(context).pop();
+                    //Navigator.of(context).pop();
+                    Navigator.pop(context, 'reload');
                 }
               }on Exception catch (e) {
                     showDialog(

@@ -79,8 +79,9 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
                     SnackBar(
                       content: Text('News successfully added.'),
                       backgroundColor: Colors.green,
-                     ),
-                    );
+                     ));
+                     _formKey.currentState?.reset();
+                     Navigator.pop(context, 'reload');
                 } else{
                   print(request);
                   await _novostProvider.update(widget.novost!.novostId!, request);
@@ -88,8 +89,8 @@ class _NovostDetailScreenState extends State<NovostDetailScreen> {
                     SnackBar(
                       content: Text('News successfully updated.'),
                       backgroundColor: Colors.green,
-                     ),
-                    );
+                     ));
+                     Navigator.pop(context, 'reload');
                 }
               }on Exception catch (e) {
                     showDialog(
