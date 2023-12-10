@@ -175,7 +175,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
     );
   },
-  child: Text('Prikaži više'),
+  child: Text('Details'),
 ),
 
                 ),

@@ -49,10 +49,11 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     _fetchTerminiForPatient(_selectedPatient ?? _modifiedPacijentId ?? -1);
   }
 
-  bool _isDateTimeOccupied(DateTime dateTime) {
+bool _isDateTimeOccupied(DateTime dateTime) {
   if (_termini != null) {
     for (var termin in _termini!) {
-      if (termin.datum == dateTime) {
+      if (dateTime.isBefore(termin.datum!.add(Duration(minutes: 30))) &&
+          termin.datum!.isBefore(dateTime.add(Duration(minutes: 30)))) {
         return true;
       }
     }
