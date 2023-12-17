@@ -35,6 +35,8 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
 
   bool get _isEditing => widget.termin != null;
 
+  SearchResult<Termin>? terminiResult;
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +49,21 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
 
     _fetchPacijenti();
     _fetchTerminiForPatient(_selectedPatient ?? _modifiedPacijentId ?? -1);
+    _fetchOcuppiedAppointments();
+  }
+
+   Future<void> _fetchOcuppiedAppointments() async {
+    try {
+      var data = await _terminiProvider.get(filter: {
+        'datum': _modifiedDatum.toIso8601String(),
+      });
+
+      setState(() {
+        terminiResult = data;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
 bool _isDateTimeOccupied(DateTime dateTime) {
@@ -100,92 +117,132 @@ bool _isDateTimeOccupied(DateTime dateTime) {
       appBar: AppBar(
         title: Text(_isEditing ? 'Edit Appointment' : 'Add Appointment'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 16.0),
-            DropdownButton<int>(
-              value: _selectedPatient,
-              onChanged: _isEditing ? null : (newValue) {
-                setState(() {
-                  _selectedPatient = newValue!;
-                });
-              },
-              items: result?.result.map<DropdownMenuItem<int>>((Korisnik korisnik) {
-                return DropdownMenuItem<int>(
-                  value: korisnik.korisnikId,
-                  child: Text(korisnik.ime!),
-                );
-              }).toList() ?? [],
-              isExpanded: true,
-              disabledHint: Text(
-                _selectedPatient != null
-                    ? 'Selected Patient ID: $_selectedPatient'
-                    : 'Select a Patient',
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 16.0),
+                  DropdownButton<int>(
+                    value: _selectedPatient,
+                    onChanged: _isEditing ? null : (newValue) {
+                      setState(() {
+                        _selectedPatient = newValue!;
+                      });
+                    },
+                    items: result?.result.map<DropdownMenuItem<int>>((Korisnik korisnik) {
+                      return DropdownMenuItem<int>(
+                        value: korisnik.korisnikId,
+                        child: Text(korisnik.ime!),
+                      );
+                    }).toList() ?? [],
+                    isExpanded: true,
+                    disabledHint: Text(
+                      _selectedPatient != null
+                          ? 'Selected Patient ID: $_selectedPatient'
+                          : 'Select a Patient',
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Date:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    DateFormat('dd.MM.yyyy - HH:mm').format(_modifiedDatum),
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () async {
+                          final selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: _modifiedDatum,
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+
+                          if (selectedDate != null) {
+                            final selectedTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(_modifiedDatum),
+                            );
+
+                            if (selectedTime != null) {
+                              setState(() {
+                                _modifiedDatum = DateTime(
+                                  selectedDate.year,
+                                  selectedDate.month,
+                                  selectedDate.day,
+                                  selectedTime.hour,
+                                  selectedTime.minute,
+                                );
+                                _isDateModified = true;
+                                _isSaveButtonEnabled = true;
+                              });
+                              await _fetchOcuppiedAppointments();
+                            }
+                          }
+                        },
+                        child: Text('Change Date'),
+                      ),
+                      ElevatedButton(
+                        onPressed: _isSaveButtonEnabled ? ()  {
+                          if (_isEditing) {
+                            _saveModifiedTermin();
+                          } else {
+                            _saveNewTermin();
+                          }
+                        } : null,
+                        child: Text('Save'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(children: [
+                      (terminiResult == null || terminiResult!.result.isEmpty)
+                          ? Text('No occupied appointments')
+                          : Text('Occupied appointments')
+                    ],
+                  ),
+                  ),
+
+                  Expanded(
+                    child: (terminiResult == null || terminiResult!.result.isEmpty) ? Container() :
+                    ListView.builder(
+                      itemCount: terminiResult!.result.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(terminiResult!.result[index].datum.toString(),
+                                ),
+                            ),
+                            const Divider(
+                              color: Colors.black,
+                              thickness: 1,
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ) 
+                ],
               ),
             ),
-            SizedBox(height: 20),
-            Text(
-              'Date:',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Text(
-              DateFormat('dd.MM.yyyy - HH:mm').format(_modifiedDatum),
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    final selectedDate = await showDatePicker(
-                      context: context,
-                      initialDate: _modifiedDatum,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2101),
-                    );
-
-                    if (selectedDate != null) {
-                      final selectedTime = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.fromDateTime(_modifiedDatum),
-                      );
-
-                      if (selectedTime != null) {
-                        setState(() {
-                          _modifiedDatum = DateTime(
-                            selectedDate.year,
-                            selectedDate.month,
-                            selectedDate.day,
-                            selectedTime.hour,
-                            selectedTime.minute,
-                          );
-                          _isDateModified = true;
-                          _isSaveButtonEnabled = true;
-                        });
-                      }
-                    }
-                  },
-                  child: Text('Change Date'),
-                ),
-                ElevatedButton(
-                  onPressed: _isSaveButtonEnabled ? ()  {
-                    if (_isEditing) {
-                      _saveModifiedTermin();
-                    } else {
-                      _saveNewTermin();
-                    }
-                  } : null,
-                  child: Text('Save'),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -10,7 +10,6 @@ namespace DermatoloskaOrdinacija.Model.SearchObjects
     {
         public string? Doktor { get; set; }
         public string? Pacijent { get; set; }
-        
-
+        public DateTime? Datum { get; set; }
     }
 }

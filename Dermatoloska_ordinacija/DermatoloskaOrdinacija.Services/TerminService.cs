@@ -42,6 +42,12 @@ namespace DermatoloskaOrdinacija.Services
             {
                 filteredQuery = filteredQuery.Where(x => x.KorisnikIdPacijentNavigation.Username.StartsWith(search.Pacijent.ToString()));
             }
+            if(search.Datum != null)
+            {
+                filteredQuery = filteredQuery.Where(x => x.Datum.Value.Day == search.Datum.Value.Day &&
+                                                        x.Datum.Value.Month == search.Datum.Value.Month &&
+                                                        x.Datum.Value.Year == search.Datum.Value.Year);
+            }
             return filteredQuery;
         }
     }
