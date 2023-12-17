@@ -19,8 +19,15 @@ namespace DermatoloskaOrdinacija.Controllers
         [HttpPost("TrainModel")]
         public virtual async Task<IActionResult> TrainModel()
         {
-            var dto = await (_service as IRecommendResultService).TrainProductsModel();
-            return Ok(dto);
+            try
+            {
+                var dto = await (_service as IRecommendResultService).TrainProductsModel();
+                return Ok(dto);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("ClearRecommendation")]

@@ -133,7 +133,7 @@ string virtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") 
 
 
 //////////////////////////////////////////////////////////////////////////////////
-/*
+
 
 var factory = new ConnectionFactory 
 {
@@ -186,7 +186,7 @@ channel.BasicConsume(queue: "favorites",
                      autoAck: true,
                      consumer: consumer);
 
-*/
+
 //////////////////////////////////////////////////////////////////////////////////
 ///
 

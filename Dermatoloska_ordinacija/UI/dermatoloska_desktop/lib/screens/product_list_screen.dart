@@ -117,12 +117,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 try {
                 await _recommendResultProvider.trainData();
                 } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                content: Text('Error'),
-                duration: Duration(seconds: 2),
-                ),
-               );
+               String errorMessage = 'An error occurred';
+
+        if (e is Exception && e.toString().isNotEmpty) {
+        final regex = RegExp(r'status code: (.+)$');
+        final match = regex.firstMatch(e.toString());
+
+        if (match != null) {
+          errorMessage = match.group(1)!;
+        }
+      }
+
+       ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          duration: Duration(seconds: 3),
+        ),
+      );
               }
               },
               child: Text("Train Recomm"),

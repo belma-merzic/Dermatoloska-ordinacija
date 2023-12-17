@@ -44,7 +44,7 @@ namespace DermatoloskaOrdinacija.Services
 
                     foreach (var x in tmpData)
                     {
-                        if (x.StavkaNarudzbes.Count > 1)
+                        if ( x.StavkaNarudzbes.Count > 1)
                         {
                             var distinctItemId = x.StavkaNarudzbes.Select(y => y.ProizvodId).ToList();
 
@@ -120,7 +120,7 @@ namespace DermatoloskaOrdinacija.Services
             var stavkeNarudzbe = _context.StavkaNarudzbes.ToList();
             var proizvodi = _context.Proizvods.ToList();
 
-            if (stavkeNarudzbe.Count() > 0)
+            if (proizvodi.Count > 4 && stavkeNarudzbe.Count() > 2)
             {
                 List<Database.RecommendResult> recommendList = new List<Database.RecommendResult>();
 

@@ -127,11 +127,11 @@ if(isValidResponse(response)){
     throw new Exception("Unauthorized");
   }
   else if(response.statusCode == 400){
-    throw new Exception("You have entered invalid data. Please correct the errors.");
+    throw new Exception("Bad request, status code: ${response.body}");
   }
   else{
     print(response.body);
-    throw new Exception("Something bad happened please try again");
+    throw new Exception("Something bad happened please try again, status code: ${response.body}");
   }
  }
 

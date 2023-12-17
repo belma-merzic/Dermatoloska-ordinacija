@@ -72,6 +72,44 @@ namespace DermatoloskaOrdinacija.Services
                 }
             }
 
+            foreach (var item in _context.Recenzijas)
+            {
+                if (id == item.ProizvodId)
+                {
+                    _context.Recenzijas.Remove(item);
+                }
+            }
+
+            foreach (var item in _context.Dojams)
+            {
+                if (id == item.ProizvodId)
+                {
+                    _context.Dojams.Remove(item);
+                }
+            }
+
+            foreach (var item in _context.RecommendResults)
+            {
+                if (id == item.ProizvodId)
+                {
+                    _context.RecommendResults.Remove(item);
+                }
+                else if (id == item.PrviProizvodId)
+                {
+                    _context.RecommendResults.Remove(item);
+                }
+                else if (id == item.DrugiProizvodId)
+                {
+                    _context.RecommendResults.Remove(item);
+                }
+                else if (id == item.TreciProizvodId)
+                {
+                    _context.RecommendResults.Remove(item);
+                }
+            }
+
+
+
             var entity = await set.FindAsync(id);
             
             set.Remove(entity);
