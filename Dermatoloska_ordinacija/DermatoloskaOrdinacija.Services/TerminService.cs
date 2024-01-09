@@ -50,6 +50,32 @@ namespace DermatoloskaOrdinacija.Services
             }
             return filteredQuery;
         }
+
+        public override Task<Model.Termin> Insert(TerminInsertRequest insert)
+        {
+            if (!insert.Datum.HasValue)
+            {
+                throw new ArgumentException("Datum ne smije biti null.");
+            }
+
+            if (insert.Datum.Value.Minute != 0)
+            {
+                throw new ArgumentException("Minute moraju biti 0.");
+            }
+
+            if (insert.Datum.Value.Hour < 8 || insert.Datum.Value.Hour > 20)
+            {
+                throw new ArgumentException("Sati moraju biti između 8 i 20.");
+            }
+
+            DateTime currentDate = DateTime.Now.Date;
+            if (insert.Datum.Value.Date <= currentDate)
+            {
+                throw new ArgumentException("Ne možete zakazati termin za trenutni dan ili dane unazad.");
+            }
+
+            return base.Insert(insert);
+        }
     }
 
 }

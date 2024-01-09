@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dermatoloska_mobile/providers/korisnik_provider.dart';
 import 'package:dermatoloska_mobile/providers/product_provider.dart';
 import 'package:dermatoloska_mobile/screens/product_detail_screen.dart';
@@ -85,17 +88,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
             children: [
               _buildSearch(),
               Container(
-                height: 200,
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 4 / 3,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 30),
-                  scrollDirection: Axis.horizontal,
-                  children: _buildProductCardList(result, false),
-                ),
-              ),
+  height: 200,
+  child: SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: _buildProductCardList(result, false),
+    ),
+  ),
+),
+
               SizedBox(
                 height: 15,
               ),
@@ -185,8 +186,10 @@ List<Widget> list = (dataX?.result ?? [])
                     child: Container(
                       height: 100,
                       width: 100,
-                      child: x.slika == null
-                          ? Text("No image")
+                      child: x.slika == null || x.slika.isEmpty
+                         // ? Text("No image")
+                         // : imageFromBase64String(x.slika!),
+                          ? Image.asset("assets/images/no-image.jpg")
                           : imageFromBase64String(x.slika!),
                     ),
                   ),

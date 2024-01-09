@@ -45,6 +45,8 @@ dependencies:
   intl: ^0.18.1
   flutter_form_builder: ^9.0.0
   file_picker: ^5.3.2
+  table_calendar: ^3.0.9
+  syncfusion_flutter_datepicker: ^24.1.44
 
 dev_dependencies:
   json_serializable: ^6.7.0

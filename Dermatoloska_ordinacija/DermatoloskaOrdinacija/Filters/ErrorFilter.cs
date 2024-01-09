@@ -14,6 +14,11 @@ namespace DermatoloskaOrdinacija.Filters
                 context.ModelState.AddModelError("userError", context.Exception.Message);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest; 
             }
+            else if (context.Exception is ArgumentException)
+            {
+                context.ModelState.AddModelError("argumentError", context.Exception.Message);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            }
             else
             {
                 context.ModelState.AddModelError("ERROR", "Server side error");

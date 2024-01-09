@@ -8,6 +8,7 @@ import '../models/termin.dart';
 import '../providers/korisnik_provider.dart';
 import '../providers/termini_provider.dart';
 import '../utils/util.dart';
+import 'date_screen.dart';
 
 class TerminDetailScreen extends StatefulWidget {
   final Termin? termin;
@@ -94,17 +95,16 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     }
   }
 
- bool _isDateTimeOccupied(DateTime dateTime) {
-  if (_termini != null) {
-    for (var termin in _termini!) {
-      if (dateTime.isBefore(termin.datum!.add(Duration(minutes: 30))) &&
-          termin.datum!.isBefore(dateTime.add(Duration(minutes: 30)))) {
-        return true;
+  bool _isDateTimeOccupied(DateTime dateTime) {
+    if (_termini != null) {
+      for (var termin in _termini!) {
+        if (termin.datum == dateTime) {
+          return true;
+        }
       }
     }
+    return false;
   }
-  return false;
-}
 
    @override
   Widget build(BuildContext context) {
@@ -157,35 +157,24 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () async {
-                      final selectedDate = await showDatePicker(
-                        context: context,
-                        initialDate: _modifiedDatum,
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-          
-                      if (selectedDate != null) {
-                        final selectedTime = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.fromDateTime(_modifiedDatum),
-                        );
-          
-                        if (selectedTime != null) {
-                          
-                          setState(() {
-                            _modifiedDatum = DateTime(
-                              selectedDate.year,
-                              selectedDate.month,
-                              selectedDate.day,
-                              selectedTime.hour,
-                              selectedTime.minute,
-                            );
-                            _isDateModified = true;
-                            _isSaveButtonEnabled = true;
-                          });
-                          await _fetchOcuppiedAppointments();
-                        }
-                      }
+                       var terminDatum = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => DateTest(),
+                      ),
+                    );
+
+                    if(terminDatum!=null && terminDatum is DateTime)
+                    {
+                      print("BELMAAAAAAAAAAAAAAAAAAAA");
+                    print((terminDatum as DateTime).toIso8601String());
+
+                    setState(() {
+                       _modifiedDatum = terminDatum;
+                      _isDateModified = true;
+                      _isSaveButtonEnabled = true;
+                    });
+                  await _fetchOcuppiedAppointments();
+                    }
                     },
                     child: Text('Select Date and Time'),
                   ),
@@ -240,7 +229,6 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     );
   }
 
-  
   void _saveNewTermin() async {
     if (_termini == null) {
       return;

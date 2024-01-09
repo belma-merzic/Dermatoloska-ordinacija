@@ -1,3 +1,4 @@
+import 'package:dermatoloska_desktop/screens/date_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class TerminDetailScreen extends StatefulWidget {
   TerminDetailScreen({this.termin, this.selectedPatient});
 
   @override
-  _TerminDetailScreenState createState() => _TerminDetailScreenState();
+  _TerminDetailScreenState createState() =>
+      _TerminDetailScreenState();
 }
 
 class _TerminDetailScreenState extends State<TerminDetailScreen> {
@@ -24,7 +26,7 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
   int? _modifiedDoktorId;
   int? _modifiedPacijentId;
 
-    bool _isDateModified = false;
+  bool _isDateModified = false;
   bool _isSaveButtonEnabled = false;
 
   late KorisniciProvider _korisniciProvider;
@@ -40,7 +42,8 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _korisniciProvider = Provider.of<KorisniciProvider>(context, listen: false);
+    _korisniciProvider =
+        Provider.of<KorisniciProvider>(context, listen: false);
     _terminiProvider = TerminiProvider();
 
     _modifiedDatum = widget.termin?.datum ?? DateTime.now();
@@ -52,7 +55,7 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     _fetchOcuppiedAppointments();
   }
 
-   Future<void> _fetchOcuppiedAppointments() async {
+  Future<void> _fetchOcuppiedAppointments() async {
     try {
       var data = await _terminiProvider.get(filter: {
         'datum': _modifiedDatum.toIso8601String(),
@@ -66,18 +69,17 @@ class _TerminDetailScreenState extends State<TerminDetailScreen> {
     }
   }
 
-bool _isDateTimeOccupied(DateTime dateTime) {
-  if (_termini != null) {
-    for (var termin in _termini!) {
-      if (dateTime.isBefore(termin.datum!.add(Duration(minutes: 30))) &&
-          termin.datum!.isBefore(dateTime.add(Duration(minutes: 30)))) {
-        return true;
+  bool _isDateTimeOccupied(DateTime dateTime) {
+    if (_termini != null) {
+      for (var termin in _termini!) {
+        if (dateTime.isBefore(termin.datum!.add(Duration(minutes: 30))) &&
+            termin.datum!.isBefore(dateTime.add(Duration(minutes: 30)))) {
+          return true;
+        }
       }
     }
+    return false;
   }
-  return false;
-}
-
 
   Future<void> _fetchPacijenti() async {
     try {
@@ -129,17 +131,21 @@ bool _isDateTimeOccupied(DateTime dateTime) {
                   SizedBox(height: 16.0),
                   DropdownButton<int>(
                     value: _selectedPatient,
-                    onChanged: _isEditing ? null : (newValue) {
-                      setState(() {
-                        _selectedPatient = newValue!;
-                      });
-                    },
-                    items: result?.result.map<DropdownMenuItem<int>>((Korisnik korisnik) {
-                      return DropdownMenuItem<int>(
-                        value: korisnik.korisnikId,
-                        child: Text(korisnik.ime!),
-                      );
-                    }).toList() ?? [],
+                    onChanged: _isEditing
+                        ? null
+                        : (newValue) {
+                            setState(() {
+                              _selectedPatient = newValue!;
+                            });
+                          },
+                    items: result?.result
+                            .map<DropdownMenuItem<int>>((Korisnik korisnik) {
+                          return DropdownMenuItem<int>(
+                            value: korisnik.korisnikId,
+                            child: Text(korisnik.ime!),
+                          );
+                        }).toList() ??
+                        [],
                     isExpanded: true,
                     disabledHint: Text(
                       _selectedPatient != null
@@ -161,83 +167,78 @@ bool _isDateTimeOccupied(DateTime dateTime) {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          final selectedDate = await showDatePicker(
-                            context: context,
-                            initialDate: _modifiedDatum,
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2101),
-                          );
+ElevatedButton(
+  onPressed: () async {
+    var terminDatum = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DateTest(),
+      ),
+    );
 
-                          if (selectedDate != null) {
-                            final selectedTime = await showTimePicker(
-                              context: context,
-                              initialTime: TimeOfDay.fromDateTime(_modifiedDatum),
-                            );
+    if (terminDatum != null && terminDatum is DateTime) {
+      setState(() {
+        _modifiedDatum = terminDatum;
+        _isDateModified = true;
+        _isSaveButtonEnabled = true;
+      });
 
-                            if (selectedTime != null) {
-                              setState(() {
-                                _modifiedDatum = DateTime(
-                                  selectedDate.year,
-                                  selectedDate.month,
-                                  selectedDate.day,
-                                  selectedTime.hour,
-                                  selectedTime.minute,
-                                );
-                                _isDateModified = true;
-                                _isSaveButtonEnabled = true;
-                              });
-                              await _fetchOcuppiedAppointments();
-                            }
-                          }
-                        },
-                        child: Text('Change Date'),
-                      ),
+      await _fetchOcuppiedAppointments();
+    }
+  },
+  child: Text('Select Date and Time'),
+),
+
+
                       ElevatedButton(
-                        onPressed: _isSaveButtonEnabled ? ()  {
-                          if (_isEditing) {
-                            _saveModifiedTermin();
-                          } else {
-                            _saveNewTermin();
-                          }
-                        } : null,
+                        onPressed: _isSaveButtonEnabled
+                            ? () {
+                                if (_isEditing) {
+                                  _saveModifiedTermin();
+                                } else {
+                                  _saveNewTermin();
+                                }
+                              }
+                            : null,
                         child: Text('Save'),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
-                  
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(children: [
-                      (terminiResult == null || terminiResult!.result.isEmpty)
-                          ? Text('No occupied appointments')
-                          : Text('Occupied appointments')
-                    ],
-                  ),
-                  ),
-
-                  Expanded(
-                    child: (terminiResult == null || terminiResult!.result.isEmpty) ? Container() :
-                    ListView.builder(
-                      itemCount: terminiResult!.result.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              title: Text(terminiResult!.result[index].datum.toString(),
-                                ),
-                            ),
-                            const Divider(
-                              color: Colors.black,
-                              thickness: 1,
-                            )
-                          ],
-                        );
-                      },
+                    child: Row(
+                      children: [
+                        (terminiResult == null ||
+                                terminiResult!.result.isEmpty)
+                            ? Text('No occupied appointments')
+                            : Text('Occupied appointments')
+                      ],
                     ),
-                  ) 
+                  ),
+                  Expanded(
+                    child: (terminiResult == null ||
+                            terminiResult!.result.isEmpty)
+                        ? Container()
+                        : ListView.builder(
+                            itemCount: terminiResult!.result.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(
+                                      terminiResult!.result[index].datum
+                                          .toString(),
+                                    ),
+                                  ),
+                                  const Divider(
+                                    color: Colors.black,
+                                    thickness: 1,
+                                  )
+                                ],
+                              );
+                            },
+                          ),
+                  )
                 ],
               ),
             ),
@@ -247,101 +248,102 @@ bool _isDateTimeOccupied(DateTime dateTime) {
     );
   }
 
-void _saveModifiedTermin() async {
-  final selectedDateTime = _modifiedDatum;
+  void _saveModifiedTermin() async {
+    final selectedDateTime = _modifiedDatum;
 
-  if (_isDateTimeOccupied(selectedDateTime)) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Date and Time Occupied'),
-          content: Text('The selected date and time are already occupied.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    widget.termin!.datum = _modifiedDatum;
-    widget.termin!.korisnikIdDoktor = _modifiedDoktorId;
-    widget.termin!.korisnikIdPacijent = _modifiedPacijentId;
-
-    try {
-      await TerminiProvider().update(widget.termin!.terminId!, widget.termin!);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Appointment successfully updated.'),
-          backgroundColor: Colors.green,
-        ),
+    if (_isDateTimeOccupied(selectedDateTime)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Date and Time Occupied'),
+            content: Text('The selected date and time are already occupied.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
-      Navigator.pop(context, widget.termin);
-    } catch (e) {
-      print(e);
+    } else {
+      widget.termin!.datum = _modifiedDatum;
+      widget.termin!.korisnikIdDoktor = _modifiedDoktorId;
+      widget.termin!.korisnikIdPacijent = _modifiedPacijentId;
+
+      try {
+        await TerminiProvider()
+            .update(widget.termin!.terminId!, widget.termin!);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Appointment successfully updated.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context, widget.termin);
+      } catch (e) {
+        print(e);
+      }
     }
   }
-}
 
+  void _saveNewTermin() async {
+    Future<int> getDoctorId() async {
+      final doctors = await _korisniciProvider.get(filter: {
+        'tipKorisnika': 'uposlenik',
+      });
 
-void _saveNewTermin() async {
-  Future<int> getDoctorId() async {
-    final doctors = await _korisniciProvider.get(filter: {
-      'tipKorisnika': 'uposlenik',
-    });
+      final doctor = doctors.result
+          .firstWhere((korisnik) => korisnik.username == Authorization.username);
 
-    final doctor = doctors.result.firstWhere((korisnik) => korisnik.username == Authorization.username);
+      return doctor.korisnikId!;
+    }
 
-    return doctor.korisnikId!;
-  }
+    final doktor = await getDoctorId();
+    final selectedDateTime = _modifiedDatum;
 
-  final doktor = await getDoctorId();
-  final selectedDateTime = _modifiedDatum;
-
-  if (_isDateTimeOccupied(selectedDateTime)) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Date and Time Occupied'),
-          content: Text('The selected date and time are already occupied.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    final newTermin = Termin(
-      null,
-      doktor,
-      _selectedPatient,
-      _modifiedDatum,
-    );
-
-    try {
-      final insertedTermin = await TerminiProvider().insert(newTermin);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Appointment successfully added.'),
-          backgroundColor: Colors.green,
-        ),
+    if (_isDateTimeOccupied(selectedDateTime)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Date and Time Occupied'),
+            content: Text('The selected date and time are already occupied.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
-      Navigator.pop(context, insertedTermin);
-    } catch (e) {
-      print(e);
+    } else {
+      final newTermin = Termin(
+        null,
+        doktor,
+        _selectedPatient,
+        _modifiedDatum,
+      );
+
+      try {
+        final insertedTermin =
+            await TerminiProvider().insert(newTermin);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Appointment successfully added.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        Navigator.pop(context, insertedTermin);
+      } catch (e) {
+        print(e);
+      }
     }
   }
-}
-
 }
